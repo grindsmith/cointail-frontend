@@ -23,7 +23,7 @@ const columns = [
 const Activities = (props) => {
     return (
         <div>
-            <Card heading="Recent Activities" style={{ overflowX: "scroll"}}>
+            <Card heading="Recent Buys and Listings" style={{ overflowX: "scroll"}}>
                 <DataTable
                     items={props.activities.splice(0, 15).filter((activity) => { return activity.type === "buyNow" ||  activity.type === "list"})}
                     id="DataTableExample-headless"

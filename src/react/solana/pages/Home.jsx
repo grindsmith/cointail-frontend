@@ -10,9 +10,9 @@ import {
     getSolanaInfo,
     setActiveCollectionId,
     getCollection
- } from '../../redux/actions';
+ } from '../../../redux/actions';
 
-import Header from "../components/App/Header";
+import Header from "../../app/components/Header";
 import Collections from "../components/Home/Collections";
 
 

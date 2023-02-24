@@ -7,9 +7,9 @@ import {
 
 import {
     getWallet,
- } from '../../redux/actions';
+ } from '../../../redux/actions';
 
-import Header from "../components/App/Header";
+import Header from "../../app/components/Header";
 import User from "../components/Wallet/User";
 import Tokens from "../components/Wallet/Tokens";
 import Activities from "../components/Wallet/Activites";

@@ -10,7 +10,7 @@ import TokenInfo from "../components/Token/TokenInfo";
 import Activities from "../components/Token/Activities";
 import OffersRecieved from "../components/Token/OffersRecieved";
 import Listings from "../components/Token/Listings";
-import Header from '../components/App/Header';
+import Header from '../../app/components/Header';
 
 const Token = () => {
     let { token } = useParams();

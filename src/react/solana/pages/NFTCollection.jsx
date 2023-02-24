@@ -10,9 +10,9 @@ import {
     getCollections,
     getSolanaInfo,
     getCollection
- } from '../../redux/actions';
+ } from '../../../redux/actions';
 
-import Header from '../components/App/Header';
+import Header from '../../app/components/Header';
 import Listings from "../components/NFTCollection/Listings";
 import Activities from "../components/NFTCollection/Activities";
 import Buys from "../components/NFTCollection/Buys";

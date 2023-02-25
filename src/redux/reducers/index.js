@@ -1,10 +1,7 @@
 import { combineReducers } from 'redux';
 import * as actionTypes from '../actions/types';
-import magicEden from './magicEdenReducer';
 
-const reducer = combineReducers({
-  magicEden: magicEden,
-});
+const reducer = combineReducers({});
 
 const rootReducer = (state, action) => {
   // when a PURGE action is dispatched it will reset redux state

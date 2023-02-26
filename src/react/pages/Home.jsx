@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
-import { ConnectWallet, useAddress, useBalance } from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { 
     Card,
     IconSettings,
@@ -19,9 +19,12 @@ const Home = (props) => {
 
     return (
         <IconSettings iconPath="/icons">
-            <Card hasNoHeader>
-                <ConnectWallet />
-            </Card>
+            <div style={{ minHeight: '100vh', minWidth: '100vw'}} className="slds-align_absolute-center">
+                <ConnectWallet 
+                    accentColor="#fff"
+                    colorMode="dark"
+                />
+            </div>
         </IconSettings>
     )
 };

@@ -3,23 +3,18 @@ import { connect } from 'react-redux';
 import Axios from 'axios';
 import { ConnectWallet, useAddress, useBalance } from "@thirdweb-dev/react";
 import {
-    Button,
     Card,
-    DataTable,
-    DataTableColumn,
+    Icon,
     IconSettings,
-    Input,
     SplitView,
     SplitViewListbox,
-    Tabs,
-    TabsPanel
+    SplitViewHeader
 } from '@salesforce/design-system-react';
 import { 
     PieChart, 
     Pie, 
     Tooltip, 
 } from 'recharts';
-
 
 import Header from "../components/app/AppHeader";
 import DexScreenerPairs from "../components/wallet/DexScreenerPairs";
@@ -35,7 +30,7 @@ const Wallet = (props) => {
 
     const searchToken = async (contract) => {
         try {
-            let data = await Axios.get('http://localhost:8080/api/etherscan/contract/' + contract);
+            let data = await Axios.get('http://localhost:8080/api/token/pairs/' + contract);
             console.log(data);
             setPairs(data.data.pairs);
         } catch (err) {
@@ -45,7 +40,7 @@ const Wallet = (props) => {
 
     useEffect(() => {
         if (address !== undefined) {
-            Axios.get('http://localhost:8080/api/etherscan/wallet/' + address).then((result) => {
+            Axios.get('http://localhost:8080/api/wallet/tokens/' + address).then((result) => {
                 console.log(result.data);
                 setTokenBalances(result.data);
 
@@ -54,12 +49,29 @@ const Wallet = (props) => {
                 }
             });
         }
-    },[address])
+    },[address]);
+
+    console.log(tokenBalances.data)
 
     const masterView = () => {
         return [
+            <SplitViewHeader
+				key="1"
+				icon={
+					<Icon
+						assistiveText={{ label: 'User' }}
+						category="standard"
+						name="lead"
+                        size="small"
+                    />
+				}
+				info={tokenBalances.length + ' Token(s)'}
+				title={'Wallet Tokens'}
+				truncate
+				variant="object-home"
+			/>,
             <SplitViewListbox
-                key="2"
+                key="1"
                 labels={{
                     header: 'Wallet Tokens',
                 }}
@@ -122,7 +134,6 @@ const Wallet = (props) => {
         )
     }
 
-    
     return (
         <IconSettings iconPath="/icons">
             <Header />
@@ -144,12 +155,7 @@ const Wallet = (props) => {
     )
 };
 
-const mapStateToProps = (state) => ({
-
-});
-
-const mapDispatchToProps = (dispatch) => ({
-
-});
+const mapStateToProps = (state) => ({});
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

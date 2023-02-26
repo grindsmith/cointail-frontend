@@ -7,9 +7,9 @@ import {
     DataTable,
     DataTableCell,
     DataTableColumn,
-  } from '@salesforce/design-system-react';
+} from '@salesforce/design-system-react';
 
-  const CustomDateCell = ({ children, ...props }) => (<DataTableCell {...props} ><p>{Moment(children * 1000).fromNow()}</p></DataTableCell>);
+const CustomDateCell = ({ children, ...props }) => (<DataTableCell {...props} ><p>{Moment(children * 1000).fromNow()}</p></DataTableCell>);
 CustomDateCell.displayName = DataTableCell.displayName;
   
   const columns = [
@@ -24,7 +24,7 @@ const WalletTransactions = (props) => {
 
     useEffect(() => {
         if (props.address !== undefined) {
-            Axios.get('http://localhost:8080/api/etherscan/transactions/' + props.address).then((result) => {
+            Axios.get('http://localhost:8080/api/wallet/transactions/' + props.address).then((result) => {
                 console.log(result.data.transactions.result);
                 setTransactions(result.data.transactions.result);
             });

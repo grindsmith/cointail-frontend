@@ -1,4 +1,5 @@
 import React from "react";
+import { ConnectWallet } from "@thirdweb-dev/react";
 import {
     AppLauncher,
     AppLauncherExpandableSection,
@@ -6,6 +7,7 @@ import {
     GlobalNavigationBar,
     GlobalNavigationBarLink,
     GlobalNavigationBarRegion,
+    
 } from '@salesforce/design-system-react';
 
 const Header = () => {
@@ -14,15 +16,14 @@ const Header = () => {
             <GlobalNavigationBarRegion region="primary">
                 <AppLauncher
                     id="app-launcher-trigger"
-                    triggerName="Magic Eden"
+                    triggerName="Web3 Sandbox"
                     onSearch={(event) => {
                         console.log('Search term:', event.target.value);
                     }}
                 >
                     <AppLauncherExpandableSection title="Tile Section">
                         <AppLauncherTile
-                            title="Magic Eden"
-                            description="The key to call center and contact center is not to use too many words!"
+                            title="Web3 Sanbox"
                             iconText="CC"
                             href="/"
                         />
@@ -32,7 +33,12 @@ const Header = () => {
             <GlobalNavigationBarRegion region="secondary">
                 <GlobalNavigationBarLink label="Home" href="/" />
                 <GlobalNavigationBarLink label="Wallet" />
-                <GlobalNavigationBarLink label="Token" />
+            </GlobalNavigationBarRegion>
+            <GlobalNavigationBarRegion region="tertiary">
+                <ConnectWallet 
+                  accentColor="#fff"
+                  colorMode="dark"
+                />
             </GlobalNavigationBarRegion>
         </GlobalNavigationBar>
     )

@@ -6,17 +6,6 @@ import {
 
 
 const TokenHeader = (props) => {
-    useEffect(() => {
-        if (props.token !== undefined) {
-            /*
-            Axios.get('http://localhost:8080/api/etherscan/transactions/' + props.address).then((result) => {
-                console.log(result.data.transactions.result);
-                setTransactions(result.data.transactions.result);
-            });
-            */
-        }
-    }, [props.token]);
-
     const getDetails = () => {
         if (props.selected.length > 0) {
             return [{

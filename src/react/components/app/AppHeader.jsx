@@ -12,33 +12,22 @@ import {
 
 const Header = () => {
     return (
-        <GlobalNavigationBar>
+        <GlobalNavigationBar 
+            cloud="marketing"
+            theme="light"
+            className="header-bar"
+        >
             <GlobalNavigationBarRegion region="primary">
-                <AppLauncher
-                    id="app-launcher-trigger"
-                    triggerName="Web3 Sandbox"
-                    onSearch={(event) => {
-                        console.log('Search term:', event.target.value);
-                    }}
-                >
-                    <AppLauncherExpandableSection title="Tile Section">
-                        <AppLauncherTile
-                            title="Web3 Sanbox"
-                            iconText="CC"
-                            href="/"
-                        />
-                    </AppLauncherExpandableSection>
-                </AppLauncher>
+                <div className="slds-p-vertical_xx-small slds-p-right_small">
+                    <ConnectWallet 
+                    accentColor="#fff"
+                    colorMode="dark"
+                    />
+                </div>
             </GlobalNavigationBarRegion>
             <GlobalNavigationBarRegion region="secondary">
                 <GlobalNavigationBarLink label="Home" href="/" />
                 <GlobalNavigationBarLink label="Wallet" />
-            </GlobalNavigationBarRegion>
-            <GlobalNavigationBarRegion region="tertiary">
-                <ConnectWallet 
-                  accentColor="#fff"
-                  colorMode="dark"
-                />
             </GlobalNavigationBarRegion>
         </GlobalNavigationBar>
     )

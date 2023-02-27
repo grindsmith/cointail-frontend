@@ -10,7 +10,7 @@ const TokenHeader = (props) => {
         if (props.selected.length > 0) {
             return [{
                 label: 'Balance',
-                content: parseInt(props.selected[0]?.walletBalance) / Math.pow(10, props.selected[0]?.decimals)
+                content: props.selected[0]?.walletBalance
             },{
                 label: 'Contract Address',
                 content: props.selected[0]?.contractAddress
@@ -23,10 +23,10 @@ const TokenHeader = (props) => {
     return (
         <PageHeader
             details={getDetails()}
-            icon={<img src={props.selected[0]?.logo} alt={props.selected[0]?.symbol} />}
-            label={props.selected[0]?.symbol}
-            title={props.selected[0]?.name}
-            variant="record-home"
+            //icon={<img src={props.selected[0]?.logo} alt={props.selected[0]?.symbol} />}
+            title={props.selected[0]?.name || 'Token Pairs'}
+            variant="related-list"
+            info={(props.selected[0]?.walletBalance || '0') + " " + (props.selected[0]?.symbol || '- Select Tokens')}
         />
     );
 }

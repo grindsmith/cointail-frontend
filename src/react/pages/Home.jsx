@@ -13,7 +13,7 @@ const Home = (props) => {
 
     useEffect(() => {
         if (address !== undefined) {
-            navigate('/wallet/' + address);
+            navigate('/wallet/' + address + "/tokens");
         }
     }, [address])
 

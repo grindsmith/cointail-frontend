@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import Axios from 'axios';
-import { ConnectWallet, useAddress, useBalance } from "@thirdweb-dev/react";
+import { useAddress, useBalance } from "@thirdweb-dev/react";
 import {
     Card,
-    Icon,
     IconSettings,
     SplitView,
     SplitViewListbox,
-    SplitViewHeader
+    SplitViewHeader,
+    Button
 } from '@salesforce/design-system-react';
 import { 
     PieChart, 
@@ -17,7 +17,6 @@ import {
 } from 'recharts';
 
 import Header from "../components/app/AppHeader";
-import DexScreenerPairs from "../components/wallet/DexScreenerPairs";
 import TradingViewWidget from "../components/wallet/TradingView";
 import TokenHeader from "../components/wallet/TokenHeader";
 
@@ -28,10 +27,10 @@ const Wallet = (props) => {
     const [isOpen, setIsOpen] = useState(true);
     const [selected, setSelected] = useState([]);
 
-    const searchToken = async (contract) => {
+    const searchToken = async (symbol) => {
         try {
-            let data = await Axios.get('http://localhost:8080/api/token/pairs/' + contract);
-            console.log(data);
+            let data = await Axios.get('http://localhost:8080/api/token/pairs/' + symbol);
+            console.log(data.data)
             setPairs(data.data.pairs);
         } catch (err) {
             console.error(err)
@@ -41,7 +40,6 @@ const Wallet = (props) => {
     useEffect(() => {
         if (address !== undefined) {
             Axios.get('http://localhost:8080/api/wallet/tokens/' + address).then((result) => {
-                console.log(result.data);
                 setTokenBalances(result.data);
 
                 if (tokenBalances.length > 0) {
@@ -51,27 +49,17 @@ const Wallet = (props) => {
         }
     },[address]);
 
-    console.log(tokenBalances.data)
-
     const masterView = () => {
         return [
             <SplitViewHeader
 				key="1"
-				icon={
-					<Icon
-						assistiveText={{ label: 'User' }}
-						category="standard"
-						name="lead"
-                        size="small"
-                    />
-				}
 				info={tokenBalances.length + ' Token(s)'}
 				title={'Wallet Tokens'}
 				truncate
 				variant="object-home"
 			/>,
             <SplitViewListbox
-                key="1"
+                key="2"
                 labels={{
                     header: 'Wallet Tokens',
                 }}
@@ -79,7 +67,7 @@ const Wallet = (props) => {
                 events={{
                     onSelect: (event, { selectedItems, item }) => {
                         setSelected([item])
-                        searchToken(item.contractAddress);
+                        searchToken(item.symbol);
                     },
                 }}
                 selection={selected}
@@ -89,16 +77,24 @@ const Wallet = (props) => {
     }
 
     const detailView = () => {
+        console.log(selected);
         return (
             <div className="slds-p-horizontal_small slds-p-top_small">
                 <TokenHeader selected={selected} />
                 <div className="slds-grid slds-p-top_small">
                     <div className="slds-size_2-of-3">
-                        <TradingViewWidget />
-                        <DexScreenerPairs pairs={pairs} />
+                        <TradingViewWidget 
+                            selected={selected}
+                            pairs={pairs} 
+                        />
                     </div>
                     <div className="slds-size_1-of-3 slds-p-left_small">
-                        <Card heading="24 hour Volume">
+                        <Card 
+                            heading="24 hour Volume"
+                            headerActions={
+                                <Button label="Dex" />
+                            }
+                        >
                             <PieChart width={400} height={225}>
                                 <Pie
                                     dataKey="volume24hr"
@@ -138,7 +134,7 @@ const Wallet = (props) => {
         <IconSettings iconPath="/icons">
             <Header />
             <div style={{ marginTop: '0px'}}>
-                <div style={{ height: '95vh' }}>
+                <div style={{ height: '93vh' }}>
 					<SplitView
 						events={{
 							onClose: () => setIsOpen(false),

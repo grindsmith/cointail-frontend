@@ -6,22 +6,20 @@ import {
 } from "react-router-dom";
 
 import Home from "./react/pages/Home";
-import WalletTokens from "./react/pages/Wallet";
+import Wallets from "./react/pages/Wallets";
+import WalletDetails from "./react/pages/WalletDetails";
+import ProtectedRoutes from "./react/utils/ProtectedRoutes";
 
 class ReactRoutes extends React.Component {
 	render() {
 		return (
 			<Router>
 				<Routes> 
+					{/** <Route element={<ProtectedRoutes />}> **/}
+					<Route path="/wallets" element={<Wallets />} />
+					<Route path="/wallet/:wallet" element={<WalletDetails />}  />
+					{/** </Route> **/}
 					<Route path="/" element={<Home />} />
-					<Route path="/wallet/:wallet/tokens" element={<WalletTokens />} />
-
-					{/** 
-					<Route path="/solana" element={<Solana />} />
-					<Route path="/solana/collection/:symbol" element={<NFTCollection />} />
-					<Route path="/solana/token/:token" element={<Token />} />
-					<Route path="/solana/wallet/:wallet" element={<Wallet />} />
-					*/}
 				</Routes>
 			</Router>
 		);

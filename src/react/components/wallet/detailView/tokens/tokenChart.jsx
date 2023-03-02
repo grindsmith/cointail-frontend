@@ -1,11 +1,11 @@
 // TradingViewWidget.jsx
-import DexScreenerPairs from './DexScreenerPairs';
+import TokenPairs from './tokenPairs';
 import React, { useEffect, useRef, useState } from 'react';
+import TokenStats from './tokenStats';
 
 let tvScriptLoadingPromise;
 
-const TradingViewWidget = (props) => {
-  const [symbol, setSymbol] = useState('sushiswap:wethusdc');
+const TokenChart = (props) => {
 
   const onLoadScriptRef = useRef();
 
@@ -36,7 +36,7 @@ const TradingViewWidget = (props) => {
       if (document.getElementById('tradingview_181d0') && 'TradingView' in window) {
         new window.TradingView.widget({
           autosize: true,
-          symbol: symbol,
+          symbol: props.symbol,
           interval: "30",
           timezone: "Etc/UTC",
           theme: "dark",
@@ -49,24 +49,16 @@ const TradingViewWidget = (props) => {
         });
       }
     }
-  }, [symbol]);
+  }, [props.symbol]);
 
   return (
-    <div>
-      <div className='tradingview-widget-container' >
-        <div id='tradingview_181d0' style={{ height: '500px'}} />
-        <div className="tradingview-widget-copyright">
-          <a href={"https://www.tradingview.com/symbols/wethusdc/?exchange=uniswap3eth"} rel="noreferrer" target="_blank"><span className="blue-text">IPORWETH chart</span></a> by TradingView
-        </div>
+    <div className="tradingview-widget-container">
+      <div id='tradingview_181d0' style={{ height: '510px'}} />
+      <div className="tradingview-widget-copyright">
+        <a href={"https://www.tradingview.com/symbols/wethusdc/?exchange=uniswap3eth"} rel="noreferrer" target="_blank"><span className="blue-text">IPORWETH chart</span></a> by TradingView
       </div>
-      <DexScreenerPairs 
-        pairs={props.pairs} 
-        symbol={symbol}
-        setSymbol={setSymbol} 
-      />
     </div>
-
   );
 }
 
-export default TradingViewWidget;
+export default TokenChart;

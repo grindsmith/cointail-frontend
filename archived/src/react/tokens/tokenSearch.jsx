@@ -6,8 +6,7 @@ import {
   Button,
 } from '@salesforce/design-system-react';
 
-
-const SearchDexScreener = (props) => {
+const TokenSearch = (props) => {
   return (
     <Card heading="Search Dex Screener" bodyClassName="slds-p-around_small">
         <div className="slds-grid slds-wrap">
@@ -21,10 +20,10 @@ const SearchDexScreener = (props) => {
   );
 }
 
-SearchDexScreener.propTypes = {
-    contract: PropTypes.string.isRequired,
-    setContract: PropTypes.func.isRequired,
-    searchToken: PropTypes.func.isRequired
+TokenSearch.propTypes = {
+  contract: PropTypes.string.isRequired,
+  setContract: PropTypes.func.isRequired,
+  searchToken: PropTypes.func.isRequired
 };
 
-export default SearchDexScreener;
+export default TokenSearch;

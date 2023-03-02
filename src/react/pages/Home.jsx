@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { 
-    Card,
     IconSettings,
-  } from '@salesforce/design-system-react';
+} from '@salesforce/design-system-react';
 
 const Home = (props) => {
     const address = useAddress();
@@ -13,7 +12,7 @@ const Home = (props) => {
 
     useEffect(() => {
         if (address !== undefined) {
-            navigate('/wallet/' + address + "/tokens");
+            navigate("/wallets");
         }
     }, [address])
 

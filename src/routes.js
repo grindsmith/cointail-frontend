@@ -6,20 +6,20 @@ import {
 } from "react-router-dom";
 
 import Home from "./react/pages/Home";
-import Wallets from "./react/pages/Wallets";
-import WalletDetails from "./react/pages/WalletDetails";
-import ProtectedRoutes from "./react/utils/ProtectedRoutes";
+import Wallet from "./react/pages/Wallet";
 
 class ReactRoutes extends React.Component {
 	render() {
 		return (
 			<Router>
 				<Routes> 
-					{/** <Route element={<ProtectedRoutes />}> **/}
-					<Route path="/wallets" element={<Wallets />} />
-					<Route path="/wallet/:wallet" element={<WalletDetails />}  />
-					{/** </Route> **/}
+					<Route path="/wallet/:wallet" element={<Wallet />}  />
 					<Route path="/" element={<Home />} />
+					{/** 
+					<Route element={<ProtectedRoutes />}> 
+						<Route path="/wallets" element={<Wallets />} />
+					</Route>
+					**/}
 				</Routes>
 			</Router>
 		);

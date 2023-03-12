@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
-import { Card } from '@salesforce/design-system-react';
+import { 
+    Card,
+    Tabs,
+    TabsPanel
+} from '@salesforce/design-system-react';
 import { useParams } from "react-router-dom";
 
 import TokenChart from "./detailView/tokens/tokenChart";
 import TokenPairs from "./detailView/tokens/tokenPairs";
 import TokenStats from "./detailView/tokens/tokenStats";
-import WalletERC20Transactions from "./detailView/transactions/walletERC20Transactions";
-import WalletERC721Transactions from "./detailView/transactions/walletERC721Transactions";
-import WalletHeader from "./detailView/transactions/WalletHeader";
+import WalletTransactions from "./detailView/transactions/walletTransactions";
+import WalletHeader from "./detailView/transactions/walletHeader";
 
 import {
     getWalletTransactions,
@@ -36,25 +39,27 @@ const WalletDetailView = (props) => {
             <WalletHeader />
             {symbol === '' ? (
                 <div className="slds-grid slds-wrap slds-p-top_small">
-                    <div className="slds-size_1-of-3">
-                        <WalletHoldings />
+                    <div className="slds-size_1-of-4 slds-p-right_small">
+                        <Tabs variant="scoped">
+                            <TabsPanel label="Holdings">
+                                <WalletHoldings />
+                            </TabsPanel>
+                            <TabsPanel label="Transactions">
+                                <WalletTransactions />
+                            </TabsPanel>
+                        </Tabs>
                     </div>
-                    <div className="slds-size_1-of-3 slds-p-horizontal_small">
-                        <WalletERC20Transactions />
-                    </div>
-                    <div className="slds-size_1-of-3">
-                        <WalletERC721Transactions />
+                    <Card hasNoHeader className="slds-size_2-of-4 slds-p-around_xx-small">
+                        <TokenChart symbol={symbol} />
+                    </Card>
+                    <div className="slds-size_1-of-4 slds-p-left_small">
+                        <TokenStats />
+                        <TokenPairs symbol={symbol} setSymbol={setSymbol} />
                     </div>
                 </div>
             ): (
                 <div className="slds-grid slds-wrap">
-                    <Card hasNoHeader className="slds-size_2-of-3 slds-p-around_xx-small">
-                        <TokenChart symbol={symbol} />
-                    </Card>
-                    <div className="slds-size_1-of-3 slds-p-left_small">
-                        <TokenPairs symbol={symbol} setSymbol={setSymbol} />
-                        <TokenStats />
-                    </div>
+                    
                 </div>
             )}
         </div>

@@ -6,9 +6,6 @@ import {
     ButtonGroup, 
     Card,
     DataTable,
-    DataTableCell,
-    DataTableColumn,
-    PageHeaderControl
 } from '@salesforce/design-system-react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -28,7 +25,6 @@ const WalletERC20Transactions = (props) => {
 
     return (
         <div>
-            <Card heading="ETH & ERC20 Transactions" />
             {Object.keys(props.walletTransactions).filter((tx) => filterForERC20(tx)).map((tx, i) => {
                 return (
                     <Card 

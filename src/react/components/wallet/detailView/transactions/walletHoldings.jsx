@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import {
+    Button,
+    ButtonGroup,
     Card,
 } from '@salesforce/design-system-react';
 import {
@@ -20,12 +22,33 @@ const WalletMasterView = (props) => {
 
     return (
         <div>
-            <Card heading="Wallet Holdings" />
-            {props.walletTokens.map((token) => {
+            {props.walletTokens.map((token, i) => {
                 return (
-                    <Card hasNoHeader>
-                        <div key={token.symbol}>{token.name} ({token.symbol}) - {token.walletBalance}</div>
-                    </Card>
+                    <div 
+                        key={i}
+                        className="slds-p-top_small"
+                    >
+                        <Card 
+                            key={token.symbol}
+                            heading={token.name + " (" + token.symbol + ")"} 
+                            bodyClassName="slds-grid slds-truncate"
+                            icon={<img src={token.logo ? token.logo : 'https://w7.pngwing.com/pngs/312/613/png-transparent-ethereum-cryptocurrency-blockchain-smart-contract-erc-20-bitcoin-angle-bitcoin-ripple-thumbnail.png'} style={{ height: '25px'}} />}
+                            headerActions={
+                                <ButtonGroup>
+                                    <Button
+                                        variant="outline-brand"
+                                        label="View"
+                                        onClick={(e) => console.log(e)}
+                                    />
+                                </ButtonGroup>
+                            }
+                        >
+                            <div className="slds-size_1-of-1 slds-p-top_x-small">
+                                <div className="slds-align_absolute-center">retrieve token info from dexscreener or another place</div>
+                                <div className="slds-align_absolute-center">{token.walletBalance}</div>
+                            </div>
+                        </Card>
+                    </div>
                 )
             })}
         </div>

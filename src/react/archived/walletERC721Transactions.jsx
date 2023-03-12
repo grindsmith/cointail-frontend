@@ -7,7 +7,7 @@ import {
     DataTableCell,
     DataTableColumn,
 } from '@salesforce/design-system-react';
-import NFTRenderer from '../ERC721/NFTRenderer';
+import NFTRenderer from './ERC721/NFTRenderer';
 
 const CustomDateCell = ({ children, ...props }) => (<DataTableCell {...props} ><p>{Moment(children * 1000).fromNow()}</p></DataTableCell>);
 CustomDateCell.displayName = DataTableCell.displayName;

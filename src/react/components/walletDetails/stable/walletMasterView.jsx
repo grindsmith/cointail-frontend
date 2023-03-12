@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from 'react-redux';
+import { getAppWallets } from '../../../../redux/actions';
+import { useNavigate } from "react-router-dom";
 import {
     SplitViewListbox,
     SplitViewHeader,
 } from '@salesforce/design-system-react';
-import {
-    getWalletTokens,
-    getTokenPairs
-} from '../../../redux/actions';
-import { useNavigate, useParams } from "react-router-dom";
 
 const WalletMasterView = (props) => {
-    const { wallet } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (wallet) {
-            props.getWalletTokens(wallet)
-        }
-    }, []);
+        props.getAppWallets();
+    }, [])
 
     return [
         <SplitViewHeader
@@ -49,10 +43,8 @@ const mapStateToProps = (state) => ({
     appWallets: state.app.appWallets,
 });
 const mapDispatchToProps = (dispatch) => ({
-    getWalletTokens: (wallet) =>
-        dispatch(getWalletTokens(wallet)),
-    getTokenPairs : (symbol) =>
-        dispatch(getTokenPairs(symbol)),
+    getAppWallets: () => 
+        dispatch(getAppWallets())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletMasterView);

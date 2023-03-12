@@ -10,4 +10,9 @@
     display: block !important;
     border: 1px solid #dddbda !important;
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 10%);
+    
+}
+
+.slds-card+.slds-card {
+    margin-top: 0 !important;
 }

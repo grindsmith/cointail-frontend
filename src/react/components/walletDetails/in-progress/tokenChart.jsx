@@ -1,7 +1,5 @@
 // TradingViewWidget.jsx
-import TokenPairs from './tokenPairs';
 import React, { useEffect, useRef, useState } from 'react';
-import TokenStats from './tokenStats';
 
 let tvScriptLoadingPromise;
 

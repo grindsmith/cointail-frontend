@@ -1,5 +1,7 @@
 export {
     purge,
+    postAppWallet,
+    putAppWallet,
     getAppWallets,
     setAppWallets
 } from './app.actions';

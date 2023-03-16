@@ -7,58 +7,107 @@ import {
 } from '@salesforce/design-system-react';
 import { useParams } from "react-router-dom";
 
-import TokenChart from "./detailView/tokens/tokenChart";
-import TokenPairs from "./detailView/tokens/tokenPairs";
-import TokenStats from "./detailView/tokens/tokenStats";
-import WalletTransactions from "./detailView/transactions/walletTransactions";
-import WalletHeader from "./detailView/transactions/walletHeader";
+import TokenChart from "./detailView/token/tokenChart";
+import TokenPairs from "./detailView/token/tokenPairs";
+import WalletTransactions from "./detailView/wallet/walletTransactions";
+import WalletHeader from "./detailView/wallet/walletHeader";
 
 import {
-    getWalletTransactions,
+    getWalletTokens,
+    getWalletEthereumTransactions,
+    getTokenPairs
 } from '../../../redux/actions';
-import WalletHoldings from "./detailView/transactions/walletHoldings";
+import WalletHoldings from "./detailView/wallet/walletHoldings";
+import WalletToken from "./detailView/wallet/walletToken";
+import TokenStats from "./detailView/token/tokenStats";
 
 const WalletDetailView = (props) => {
     const { wallet } = useParams();
     const [symbol, setSymbol] = useState('');
+    const [tokenNumber, setTokenNumber] = useState(0);
 
     useEffect(() => {
         if (wallet !== undefined) {
-            props.getWalletTransactions(wallet)
+            props.getWalletEthereumTransactions(wallet);
+            props.getWalletTokens(wallet);
         }
     }, [wallet]);
 
-    useEffect(() => {
-        if (wallet !== undefined) {
-            props.getWalletTransactions(wallet)
-        }
-    }, []);
-
     return (
-        <div className="slds-m-around_small">
-            <WalletHeader />
-            {symbol === '' ? (
+        <div className="slds-m-horizontal_small">
+            {symbol !== '' ? (
                 <div className="slds-grid slds-wrap slds-p-top_small">
-                    <div className="slds-size_1-of-4 slds-p-right_small">
-                        <Tabs variant="scoped">
+                    <div className="slds-size_2-of-3">
+                        <WalletHeader 
+                            setIsOpen={props.setIsOpen}
+                        />
+                        <Tabs variant="scoped" className="slds-m-top_small">
+                            <TabsPanel label={symbol}>
+                                <TokenChart symbol={symbol} />
+                                <TokenPairs 
+                                    symbol={symbol} 
+                                    setSymbol={setSymbol} 
+                                />
+                            </TabsPanel>
+                        </Tabs>
+                    </div>
+                    <div className="slds-size_1-of-3 slds-p-left_small">
+                        <Card hasNoHeader>
+                            <WalletToken
+                                token={props.walletTokens[tokenNumber]}
+                                setSymbol={setSymbol} 
+                            />
+                        </Card>
+
+                        <Tabs variant="scoped" className="slds-m-top_small">
+                            <TabsPanel label={"More Stats"}>
+                                <TokenStats
+                                    token={props.walletTokens[tokenNumber]}
+                                />
+                            </TabsPanel>
+                            {/** 
+                            <TabsPanel label={symbol + " Pairs"}>
+                                <TokenPairs 
+                                    symbol={symbol} 
+                                    setSymbol={setSymbol} 
+                                />
+                            </TabsPanel>
+                            */}
                             <TabsPanel label="Holdings">
-                                <WalletHoldings />
+                                <WalletHoldings 
+                                    setSymbol={setSymbol}
+                                    setTokenNumber={setTokenNumber}
+                                />
                             </TabsPanel>
                             <TabsPanel label="Transactions">
                                 <WalletTransactions />
                             </TabsPanel>
                         </Tabs>
                     </div>
-                    <Card hasNoHeader className="slds-size_2-of-4 slds-p-around_xx-small">
-                        <TokenChart symbol={symbol} />
-                    </Card>
-                    <div className="slds-size_1-of-4 slds-p-left_small">
-                        <TokenStats />
-                        <TokenPairs symbol={symbol} setSymbol={setSymbol} />
-                    </div>
+                    
                 </div>
-            ): (
-                <div className="slds-grid slds-wrap">
+            ) : (
+                <div className="slds-grid slds-wrap slds-p-top_small">
+                    <div className="slds-size_2-of-3 slds-p-right_small">
+                        <WalletHeader 
+                            setIsOpen={props.setIsOpen}
+                        />
+                        <Tabs variant="scoped" className="slds-m-top_small">
+                            <TabsPanel label="Ethereum Transactions">
+                                <WalletTransactions />
+                            </TabsPanel>
+                        </Tabs>
+                    </div>
+                    <div className="slds-size_1-of-3 slds-p-right_small">
+                        <Tabs variant="scoped">
+                            <TabsPanel label="Ethereum Holdings">
+                                <WalletHoldings 
+                                    setSymbol={setSymbol}
+                                    setTokenNumber={setTokenNumber}
+                                />
+                            </TabsPanel>
+                        </Tabs>
+                    </div>
                     
                 </div>
             )}
@@ -67,11 +116,15 @@ const WalletDetailView = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-    walletTransactions: state.app.walletTransactions
+    walletTokens: state.app.walletTokens,
 });
 const mapDispatchToProps = (dispatch) => ({
-    getWalletTransactions : (wallet) =>
-        dispatch(getWalletTransactions(wallet)),
+    getWalletTokens : (wallet) =>
+        dispatch(getWalletTokens(wallet)),
+    getWalletEthereumTransactions : (wallet) =>
+        dispatch(getWalletEthereumTransactions(wallet)),
+     getTokenPairs : (symbol) =>
+        dispatch(getTokenPairs(symbol)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletDetailView);

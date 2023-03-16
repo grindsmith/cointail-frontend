@@ -14,9 +14,9 @@ const WalletDetails = (props) => {
     const [selected, setSelected] = useState([]);
 
     return (
-        <IconSettings iconPath="/icons">
+        <IconSettings iconPath="/asset/icons">
             <Header />
-            <div style={{ marginTop: '0px', height: '93vh' }}>
+            <div style={{ marginTop: '0px', height: '88vh' }}>
                 <SplitView
                     events={{
                         onClose: () => setIsOpen(false),
@@ -25,7 +25,12 @@ const WalletDetails = (props) => {
                     id="base-example"
                     isOpen={isOpen}
                     master={<WalletMasterView selected={selected} setSelected={setSelected} />}
-                    detail={<WalletDetailView selected={selected} setSelected={setSelected} />}
+                    detail={
+                        <WalletDetailView 
+                            setIsOpen={setIsOpen}
+                            selected={selected} 
+                            setSelected={setSelected} 
+                        />}
                 />
             </div>
         </IconSettings>

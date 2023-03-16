@@ -16,7 +16,8 @@ const TokenPairs = (props) => {
           variant={props.symbol === children ? "outline-brand" : "brand"}
           label={props.symbol === children ? "Selected" : "View"}
           onClick={(e) => { 
-            return props.setSymbol(children)
+            console.log(children)
+            return props.setSymbol(props.symbol)
           }}
         />
       </DataTableCell>
@@ -37,7 +38,7 @@ const TokenPairs = (props) => {
     <Card 
       heading="Top Volume Pairs"
       headerActions={<div className="slds-text-title_caps slds-p-top_xx-small">Data from <a href="https://dexscreener.com/">Dexscreener</a></div>}
-      style={{ maxHeight: '275px', overflowY: 'scroll'}}
+      style={{ maxHeight: '350px', overflowY: 'scroll'}}
     >
         <DataTable
           items={props.tokenPairs}

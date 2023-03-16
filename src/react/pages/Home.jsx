@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
@@ -7,7 +7,10 @@ import {
     Card,
     IconSettings
 } from '@salesforce/design-system-react';
-import { postAppWallets } from "../../redux/actions";
+import { 
+    purge,
+    postAppWallets 
+} from "../../redux/actions";
 
 const Home = (props) => {
     const address = useAddress();
@@ -21,10 +24,14 @@ const Home = (props) => {
         }
     }
 
+    useEffect(() => {
+        props.purge();
+    },[])
+
     return (
         <IconSettings iconPath="/icons">
             <div 
-                style={{ minHeight: '100vh', minWidth: '100vw'}} 
+                style={{ minHeight: '94vh', minWidth: '100vw'}} 
                 className="slds-align_absolute-center"
             >
                 <Card 
@@ -54,6 +61,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    purge: () => 
+        dispatch(purge()),
     postAppWallets: (wallet) => 
         dispatch(postAppWallets(wallet))
 });

@@ -1,3 +1,13 @@
+* {
+    border-color: #f09d37 !important;
+    border-radius: 0px !important;
+    font-family: "IBM Plex Sans", "Salesforce Sans", "Helvetica" !important;
+}
+
+.slds-context-bar {
+    border-bottom: 2px solid #f09d37 !important;
+}
+
 .header-bar {
     height: 4rem !important;
 }
@@ -8,10 +18,13 @@
 
 .slds-card .slds-card {
     display: block !important;
-    border: 1px solid #dddbda !important;
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 10%);
 }
 
-.slds-card+.slds-card {
+.slds-card+.slds-card, .slds-card__body {
     margin-top: 0px !important;
+}
+
+.slds-tabs_scoped__content {
+    padding: 0 !important;
 }

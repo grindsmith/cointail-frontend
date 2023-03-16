@@ -2,17 +2,14 @@ export {
     purge,
     getAppWallets,
     postAppWallets,
-    setAppWallets
-} from './app.actions';
-
-export {
+    putAppWallets,
+    setAppWallets,
     getTokenPairs,
-    setTokenPairs
-} from './token.actions';
-
-export {
-    getWalletTransactions,
-    setWalletTransactions,
+    setTokenPairs,
+    getWalletEthereumTransactions,
+    getWalletArbitrumTransactions,
+    setWalletEthereumTransactions,
+    setWalletArbitrumTransactions,
     getWalletTokens,
     setWalletTokens
-} from './wallet.actions';
+} from './app.actions';

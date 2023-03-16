@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Button,
-} from '@salesforce/design-system-react';
-import WalletTokenStatsBox from '../wallet/walletTokenStatsBox';
+import WalletTokenStatsBox from './walletTokenStatsBox';
 
 const TokenStats = (props) => {
     console.log(props.token)

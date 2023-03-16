@@ -7,8 +7,8 @@ import {
 } from '@salesforce/design-system-react';
 import { useParams } from "react-router-dom";
 
-import TokenChart from "./detailView/token/tokenChart";
-import TokenPairs from "./detailView/token/tokenPairs";
+import TokenChart from "./detailView/unused/tokenChart";
+import TokenPairs from "./detailView/unused/tokenPairs";
 import WalletTransactions from "./detailView/wallet/walletTransactions";
 import WalletHeader from "./detailView/wallet/walletHeader";
 
@@ -18,8 +18,8 @@ import {
     getTokenPairs
 } from '../../../redux/actions';
 import WalletHoldings from "./detailView/wallet/walletHoldings";
-import WalletToken from "./detailView/wallet/walletToken";
-import TokenStats from "./detailView/token/tokenStats";
+import WalletToken from "./detailView/unused/walletToken";
+import TokenStats from "./detailView/unused/tokenStats";
 
 const WalletDetailView = (props) => {
     const { wallet } = useParams();
@@ -65,14 +65,6 @@ const WalletDetailView = (props) => {
                                     token={props.walletTokens[tokenNumber]}
                                 />
                             </TabsPanel>
-                            {/** 
-                            <TabsPanel label={symbol + " Pairs"}>
-                                <TokenPairs 
-                                    symbol={symbol} 
-                                    setSymbol={setSymbol} 
-                                />
-                            </TabsPanel>
-                            */}
                             <TabsPanel label="Holdings">
                                 <WalletHoldings 
                                     setSymbol={setSymbol}

@@ -1,46 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from 'react';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-    SplitViewListbox,
-} from '@salesforce/design-system-react';
-import {
-    getAppWallets
-} from "../../../redux/actions";
-import { 
-    useNavigate, 
-} from "react-router-dom";
 
-const WalletMasterView = (props) => {
-    const navigate = useNavigate();
+import { SplitViewListbox } from '@salesforce/design-system-react';
+import { useNavigate } from 'react-router-dom';
+import { getAppWallets } from '../../../redux/actions';
 
-    useEffect(() => {
-        props.getAppWallets()
-    }, []);
+function WalletMasterView(props) {
+  const { appWallets } = props;
+  const navigate = useNavigate();
 
-    return [
-        <SplitViewListbox
-            key="2"
-            labels={{
-                header: props.appWallets.length + ' Wallet(s)',
-            }}
-            options={props.appWallets}
-            events={{
-                onSelect: async (event, { selectedItems, item }) => {
-                    navigate('/wallet/' + item.address);
-                },
-            }}
-            selection={props.selected}
-            unread={[]}
-        />
-    ]
-};
+  useEffect(() => {
+    getAppWallets();
+  }, []);
+
+  return [
+    <SplitViewListbox
+      key="2"
+      labels={{
+        header: `${appWallets.length} Wallet(s)`,
+      }}
+      options={appWallets}
+      events={{
+        onSelect: async (event, { item }) => {
+          navigate(`/wallet/${item.address}`);
+        },
+      }}
+      selection={props.selected}
+      unread={[]}
+    />,
+  ];
+}
 
 const mapStateToProps = (state) => ({
-    appWallets: state.app.appWallets,
+  appWallets: state.app.appWallets,
 });
+
 const mapDispatchToProps = (dispatch) => ({
-    getAppWallets: () => 
-        dispatch(getAppWallets())
+  getAppWallets: () => dispatch(getAppWallets()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletMasterView);

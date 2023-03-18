@@ -12,14 +12,6 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
-
-const composeEnhancers =
-  (process.env.NODE_ENV === 'local'
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : null) || compose;
-
-export const store = createStore(
-  persistedReducer,
-  composeEnhancers(applyMiddleware(thunk))
-);
+const composeEnhancers = (process.env.NODE_ENV === 'local' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
+export const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
 export const persistor = persistStore(store);

@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/types';
 
 const initialState = {
     appWallets: [],
-    walletTokens: [],
+    walletEthereumTokens: [],
+    walletArbitrumTokens: [],
     walletEthereumTransactions: [],
     walletArbitrumTransactions: [],
     tokenPairs: [],
@@ -16,10 +17,15 @@ export default (state = initialState, action) => {
                 ...state,
                 appWallets: [...action.appWallets],
             };
-        case actionTypes.SET_WALLET_TOKENS:
+        case actionTypes.SET_WALLET_ETHEREUM_TOKENS:
             return {
                 ...state,
-                walletTokens: [...action.walletTokens],
+                walletEthereumTokens: [...action.walletEthereumTokens],
+            };
+        case actionTypes.SET_WALLET_ARBITRUM_TOKENS:
+            return {
+                ...state,
+                walletArbitrumTokens: [...action.walletArbitrumTokens],
             };
         case actionTypes.SET_WALLET_ETHEREUM_TRANSACTIONS:
             return {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { connect } from 'react-redux';
 import { 
     DataTable,
     DataTableCell,
@@ -10,7 +9,7 @@ import {
 const TransactionCell = ({ children }) => {
     return (
         <DataTableCell>
-            <a href={children} target="_blank" alt="tx">Chart</a>
+            <a href={children} target="_blank" alt="tx" rel="noreferrer">View</a>
         </DataTableCell>
   )
 };
@@ -18,20 +17,18 @@ TransactionCell.displayName = DataTableCell.displayName;
 
 const columns = [
     <DataTableColumn key="label" label="Token" property="label" />,
-    <DataTableColumn key="priceUSD" label="Price" property="priceUSD" />,
+    <DataTableColumn key="walletBalance" label="Balance" property="walletBalance" />,
     <DataTableColumn key="priceChange1hr" label="1hr %" property="priceChange1hr" />,
     <DataTableColumn key="priceChange24hr" label="24hr %" property="priceChange24hr" />,
-    <DataTableColumn key="url" label="DexScrnr" property="url">
+    <DataTableColumn key="url" label="Chart" property="url">
         <TransactionCell />
     </DataTableColumn>,
 ];
 
 const WalletHoldings = (props) => {
-    console.log(props.walletTokens);
-
     return (
         <DataTable
-            items={props.walletTokens.filter((tx) => tx.walletBalance > 0)}
+            items={props.tokens.filter((tx) => tx.walletBalance > 0)}
             id="DataTableExample-headless"
             className="slds-truncate"
             fixedLayout
@@ -41,8 +38,4 @@ const WalletHoldings = (props) => {
     )
 };
 
-const mapStateToProps = (state) => ({
-    walletTokens: state.app.walletTokens,
-});
-const mapDispatchToProps = (dispatch) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(WalletHoldings);
+export default WalletHoldings;

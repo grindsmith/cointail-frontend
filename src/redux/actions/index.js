@@ -10,6 +10,8 @@ export {
     getWalletArbitrumTransactions,
     setWalletEthereumTransactions,
     setWalletArbitrumTransactions,
-    getWalletTokens,
-    setWalletTokens
+    getWalletEthereumTokens,
+    setWalletEthereumTokens,
+    getWalletArbitrumTokens,
+    setWalletArbitrumTokens
 } from './app.actions';

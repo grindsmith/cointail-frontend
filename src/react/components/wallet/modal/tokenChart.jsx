@@ -34,7 +34,7 @@ const TokenChart = (props) => {
       if (document.getElementById('tradingview_181d0') && 'TradingView' in window) {
         new window.TradingView.widget({
           autosize: true,
-          symbol: "uniswap3eth:" + props.symbol + "USDT",
+          symbol: "f:0x1C6E968f2E6c9DEC61DB874E28589fd5CE3E1f2c:ARXUSDC",
           interval: "30",
           timezone: "Etc/UTC",
           theme: "dark",

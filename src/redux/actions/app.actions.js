@@ -1,17 +1,16 @@
 import * as actionTypes from './types';
 import Axios from 'axios';
 
-const BACKEND_URL = "http://localhost:8080";
-
 export const purge = () => ({
   type: actionTypes.PURGE,
 });
 
 export const getAppWallets = () => {  
   return (dispatch) => {
-    Axios.get(BACKEND_URL + '/api/wallet')
+    Axios.get(process.env.REACT_APP_BACKEND_URL + '/api/user')
     .then((res) => {
-      dispatch(setAppWallets(res.data.wallets))
+      console.log(res.data)
+      dispatch(setAppWallets(res.data.users))
     })
     .catch((error) => {
         console.log(error);
@@ -21,7 +20,7 @@ export const getAppWallets = () => {
 
 export const postAppWallets = (address) => {
   return () => {
-    Axios.post(BACKEND_URL + '/api/wallet', {
+    Axios.post(process.env.REACT_APP_BACKEND_URL + '/api/user', {
       'address': address
     })
     .then((res) => {
@@ -35,7 +34,7 @@ export const postAppWallets = (address) => {
 
 export const putAppWallets = (address, name) => {
   return () => {
-    Axios.put(BACKEND_URL + '/api/wallet', {
+    Axios.put(process.env.REACT_APP_BACKEND_URL + '/api/user', {
       'wallet': address,
       'name': name
     })
@@ -60,12 +59,11 @@ export const setAppWallets = (appWallets) => ({
  * 
  * 
  */
-export const getTokenPairs = (symbol) => {  
+export const getTokenPairs = (contractAddress) => {  
   return (dispatch) => {
-        Axios.get(BACKEND_URL + '/api/token/pairs/' + symbol)
+        Axios.get(process.env.REACT_APP_BACKEND_URL + '/api/ethereum/token/pairs/' + contractAddress)
         .then((res) => {
-            console.log(res.data.tokenPairs);
-            dispatch(setTokenPairs(res.data.tokenPairs))
+            dispatch(setTokenPairs(res.data.pairs))
         })
         .catch((error) => {
             console.log(error);
@@ -85,11 +83,11 @@ export const setTokenPairs = (tokenPairs) => ({
  * 
  * 
  */
-export const getWalletTokens = (wallet) => {  
+export const getWalletEthereumTokens = (account) => {  
   return (dispatch) => {
-      Axios.get(BACKEND_URL + '/api/wallet/' + wallet + '/tokens')
+      Axios.get(process.env.REACT_APP_BACKEND_URL + '/api/ethereum/account/' + account + '/tokens')
       .then((res) => {
-          dispatch(setWalletTokens(res.data.walletTokens));
+          dispatch(setWalletEthereumTokens(res.data.tokens));
       })
       .catch((error) => {
           console.log(error);
@@ -97,16 +95,33 @@ export const getWalletTokens = (wallet) => {
   };
 };
 
-export const setWalletTokens = (walletTokens) => ({
-  type: actionTypes.SET_WALLET_TOKENS,
-  walletTokens: walletTokens,
+export const setWalletEthereumTokens = (walletEthereumTokens) => ({
+  type: actionTypes.SET_WALLET_ETHEREUM_TOKENS,
+  walletEthereumTokens: walletEthereumTokens,
 });
 
-export const getWalletEthereumTransactions = (wallet) => {  
+export const getWalletArbitrumTokens = (account) => {  
   return (dispatch) => {
-      Axios.get(BACKEND_URL + '/api/wallet/' + wallet + '/transactions/ethereum')
+      Axios.get(process.env.REACT_APP_BACKEND_URL + '/api/arbitrum/account/' + account + '/tokens')
       .then((res) => {
-          dispatch(setWalletEthereumTransactions(res.data.ethereumTransactions))
+          dispatch(setWalletArbitrumTokens(res.data.tokens));
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+  };
+};
+
+export const setWalletArbitrumTokens = (walletArbitrumTokens) => ({
+  type: actionTypes.SET_WALLET_ARBITRUM_TOKENS,
+  walletArbitrumTokens: walletArbitrumTokens,
+});
+
+export const getWalletEthereumTransactions = (account) => {  
+  return (dispatch) => {
+    Axios.get(process.env.REACT_APP_BACKEND_URL + '/api/ethereum/account/' + account + '/transactions')
+    .then((res) => {
+          dispatch(setWalletEthereumTransactions(res.data.transactions))
       })
       .catch((error) => {
           console.log(error.message);
@@ -119,11 +134,11 @@ export const setWalletEthereumTransactions = (walletEthereumTransactions) => ({
   walletEthereumTransactions: walletEthereumTransactions
 });
 
-export const getWalletArbitrumTransactions = (wallet) => {  
+export const getWalletArbitrumTransactions = (account) => {  
   return (dispatch) => {
-      Axios.get(BACKEND_URL + '/api/wallet/' + wallet + '/transactions/arbitrum')
+      Axios.get(process.env.REACT_APP_BACKEND_URL + '/api/arbitrum/account/' + account + '/transactions')
       .then((res) => {
-          dispatch(setWalletArbitrumTransactions(res.data.arbitrumTransactions))
+          dispatch(setWalletArbitrumTransactions(res.data.transactions))
       })
       .catch((error) => {
           console.log(error.message);

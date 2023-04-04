@@ -12,7 +12,7 @@ import {
 import { useParams } from 'react-router-dom';
 import {
     putAppWallets,
-} from '../../../../../redux/actions';
+} from '../../../../redux/actions';
 
 const WalletHeader = (props) => {
     const address = useAddress();
@@ -25,9 +25,12 @@ const WalletHeader = (props) => {
             <PageHeader
                 details={[
                     {
-                        label: '# of Tokens',
-                        content: props.walletTokens?.filter((tx) => tx.walletBalance > 0).length || 0
-                    },
+                        label: '# of Arbitrum Tokens',
+                        content: props.walletArbitrumTokens?.filter((tx) => tx.walletBalance > 0).length || 0
+                    },{
+                        label: '# of Ethereum Tokens',
+                        content: props.walletEthereumTokens?.filter((tx) => tx.walletBalance > 0).length || 0
+                    }
                 ]}
                 label={'0x' + wallet.substr(wallet.length - 6)}
                 title={props.appWallets.find((el) => el.address === wallet)?.name}
@@ -38,23 +41,16 @@ const WalletHeader = (props) => {
                 onRenderActions={() => { 
                     return (
                         <PageHeaderControl>
-                            <ButtonGroup>
-                                {address === wallet ? (
+                            {address === wallet ? (
+                                <ButtonGroup>
                                     <Button 
                                         label="Edit Wallet" 
                                         onClick={() => {
                                             setIsOpen(true)
                                         }} 
                                     />
-                                ) : null}
-                                {/** 
-                                <Button 
-                                    label="View Other Wallets" 
-                                    onClick={() => props.setIsOpen(true)} 
-                                    variant="brand"
-                                />
-                                 */}
-                            </ButtonGroup>
+                                </ButtonGroup>
+                            ) : null}
                         </PageHeaderControl>
                     )
                 }}
@@ -84,7 +80,8 @@ const WalletHeader = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    walletTokens: state.app.walletTokens,
+    walletArbitrumTokens: state.app.walletArbitrumTokens,
+    walletEthereumTokens: state.app.walletEthereumTokens,
     appWallets: state.app.appWallets
 });
 

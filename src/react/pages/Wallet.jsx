@@ -5,7 +5,7 @@ import {
     SplitView,
 } from '@salesforce/design-system-react';
 
-import Header from "../components/app/appHeader";
+import Header from "../components/app/AppHeader";
 import WalletMasterView from "../components/wallet/walletMasterView";
 import WalletDetailView from "../components/wallet/walletDetailView";
 
@@ -14,7 +14,7 @@ const WalletDetails = (props) => {
     const [selected, setSelected] = useState([]);
 
     return (
-        <IconSettings iconPath="/asset/icons">
+        <IconSettings iconPath="/assets/icons">
             <Header />
             <div style={{ marginTop: '0px', height: '88vh' }}>
                 <SplitView

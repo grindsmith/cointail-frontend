@@ -1,6 +1,7 @@
 // APP
 export const PURGE = 'PURGE';
 export const SET_ALL_GROUPS = 'SET_ALL_GROUPS';
+export const SET_ALL_WALLETS = 'SET_ALL_WALLETS';
 
 // WALLET
 export const SET_WALLET = "SET_WALLET";

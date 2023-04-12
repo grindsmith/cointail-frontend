@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/types';
 
 const initialState = {
   allGroups: [],
+  allWallets: [],
 };
 
 export default (state = initialState, action) => {
@@ -11,6 +12,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allGroups: [...action.allGroups],
+      };
+    case actionTypes.SET_ALL_WALLETS:
+      return {
+        ...state,
+        allWallets: [...action.allWallets],
       };
     default:
       return state;

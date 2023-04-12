@@ -6,9 +6,9 @@ import {
     SplitView,
 } from '@salesforce/design-system-react';
 
-import Header from "../components/app/appHeader";
-import GroupSplitView from "../components/group/groupSplitView";
-import WalletView from "../components/wallet/walletView";
+import AppHeader from "../components/headers/appHeader";
+import GroupSplitView from "../components/split-view/groupSplitView";
+import WalletLayout from "../components/page-layout/walletLayout";
 
 import { getGroup } from "../../redux/actions";
 
@@ -17,7 +17,6 @@ const Group = (props) => {
 
     const [isOpen, setIsOpen] = useState(true);
     const [activeWallet, setActiveWallet] = useState('');
-    const [selected, setSelected] = useState([]);
 
     useEffect(() => {
         setActiveWallet(wallet);
@@ -26,8 +25,8 @@ const Group = (props) => {
 
     return (
         <IconSettings iconPath="/assets/icons">
-            <Header />
-            <div style={{ marginTop: '0px', height: '87vh' }}>
+            <AppHeader />
+            <div style={{ marginTop: '0px', height: '100vh' }}>
                 <SplitView
                     events={{
                         onClose: () => setIsOpen(false),
@@ -42,7 +41,7 @@ const Group = (props) => {
                         />
                     }
                     detail={
-                        <WalletView 
+                        <WalletLayout 
                             wallet={activeWallet}
                             setIsOpen={setIsOpen}
                         />
@@ -56,7 +55,7 @@ const Group = (props) => {
 const mapStateToProps = (state) => ({});
 const mapDispatchToProps = (dispatch) => ({
     getGroup: (groupId) => 
-        dispatch(getGroup(groupId))
+        dispatch(getGroup(groupId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);

@@ -8,7 +8,7 @@ import {
 import { ConnectWallet, useAddress } from '@thirdweb-dev/react';
 import { postGroup } from '../../../redux/actions';
 
-const GroupCreateModal = (props) => {
+const GroupModal = (props) => {
   const { isOpen, setIsOpen } = props;
 
   const address = useAddress();
@@ -35,9 +35,21 @@ const GroupCreateModal = (props) => {
       heading="Create New Group"
     >
       <section className="slds-p-around_large">
-        <Input label="Group Name" value={name} onChange={(e) => setName(e.target.value)} />
-        <Input label="Group Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-        <ConnectWallet accentColor="#fff" colorMode="dark" />
+        <Input 
+          label="Group Name" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
+        />
+        <Input 
+          label="Group Description" 
+          value={description} 
+          onChange={(e) => setDescription(e.target.value)} 
+          className="slds-m-vertical_medium"
+        />
+        <ConnectWallet 
+          accentColor="#fff" 
+          colorMode="dark" 
+        />
       </section>
     </Modal>
   )
@@ -52,4 +64,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(postGroup(name, description, address))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupCreateModal);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupModal);

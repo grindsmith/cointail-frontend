@@ -1,5 +1,5 @@
 import React from 'react';
-import WalletLinkCell from '../wallet/walletLinkCell';
+import WalletLinkCell from './linkDataCell';
 import { 
     DataTable,
     DataTableColumn,

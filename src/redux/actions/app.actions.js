@@ -16,6 +16,7 @@ export const getAllGroups = () => {
     .then((res) => {
       dispatch(setAllGroups(res.data.allGroups))
     })
+    .catch((err) => console.log(err));
   }
 }
 
@@ -23,3 +24,36 @@ export const setAllGroups = (allGroups) => ({
   type: actionTypes.SET_ALL_GROUPS,
   allGroups: allGroups,
 });
+
+/**
+ * GET ALL WALLETS
+ * @returns array of groups
+ */
+export const getAllWallets = () => {
+  return (dispatch) => {
+    Axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/wallet`)
+    .then((res) => {
+      dispatch(setAllWallets(res.data.allWallets))
+    })
+    .catch((err) => console.log(err));
+  }
+}
+
+export const setAllWallets = (allWallets) => ({
+  type: actionTypes.SET_ALL_WALLETS,
+  allWallets: allWallets,
+});
+
+/**
+ * POST GROUP WALLET 
+ * @returns array of groups
+ */
+export const postGroupWallet = (walletId, groupId) => {
+  return (dispatch) => {
+    Axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/group-wallet`, {
+      'wallet_id': walletId,
+      'group_id': groupId
+    })
+    .catch((err) => console.log(err));
+  }
+}

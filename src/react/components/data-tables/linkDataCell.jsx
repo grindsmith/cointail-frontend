@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataTableCell } from '@salesforce/design-system-react';
 
-const LinkCell = ({ children, ...props }) => {
+const LinkDataCell = ({ children, ...props }) => {
   let label = 'View';
 
   if (!props.linkLabel && !props.assetTwo)
@@ -21,6 +21,6 @@ const LinkCell = ({ children, ...props }) => {
   );
 }
 
-LinkCell.displayName = DataTableCell.displayName;
+LinkDataCell.displayName = DataTableCell.displayName;
 
-export default LinkCell;
+export default LinkDataCell;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { DataTable, DataTableColumn } from '@salesforce/design-system-react';
-import WalletLinkCell from './walletLinkCell';
+import WalletLinkCell from './linkDataCell';
 
 const WalletTransactions = (props) => {
     const { chain } = props;

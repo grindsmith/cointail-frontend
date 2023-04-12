@@ -6,8 +6,8 @@ import {
 
 import { useParams } from "react-router-dom";
 import { getWallet } from "../../redux/actions";
-import WalletView from "../components/wallet/walletView";
-import Header from "../components/app/appHeader";
+import WalletLayout from "../components/page-layout/walletLayout";
+import AppHeader from "../components/headers/appHeader";
 
 const Wallet = (props) => {
   const { wallet } = useParams();
@@ -18,9 +18,9 @@ const Wallet = (props) => {
 
   return (
     <IconSettings iconPath="/icons">
-      <Header />
+      <AppHeader />
       <div style={{ marginTop: '0px', height: '87vh' }}>
-        <WalletView 
+        <WalletLayout 
           wallet={wallet}
         />
       </div>

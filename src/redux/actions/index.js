@@ -1,7 +1,10 @@
 export {
     purge,
     getAllGroups,
-    setAllGroups
+    setAllGroups,
+    getAllWallets,
+    setAllWallets,
+    postGroupWallet
 } from './app.actions';
 
 export {
@@ -18,6 +21,7 @@ export {
 } from './wallet.actions';
 
 export {
+    postGroup,
     getGroup,
     setGroup
 } from './group.actions';

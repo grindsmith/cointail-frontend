@@ -26,7 +26,10 @@ export const postGroup = (name, description, address) => {
       'description': description,
       'address': address
     })
-    .then((res) => dispatch(setAllGroups(res.data.groups)))
+    .then((res) => {
+      console.log(res.data);
+      dispatch(setAllGroups(res.data.groups))
+    })
     .catch((err) => console.log(err));
   };
 };

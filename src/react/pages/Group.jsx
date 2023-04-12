@@ -7,7 +7,7 @@ import {
 } from '@salesforce/design-system-react';
 
 import Header from "../components/app/appHeader";
-import WalletMasterView from "../components/group/groupMasterView";
+import GroupSplitView from "../components/group/groupSplitView";
 import WalletView from "../components/wallet/walletView";
 
 import { getGroup } from "../../redux/actions";
@@ -36,7 +36,7 @@ const Group = (props) => {
                     id="base-example"
                     isOpen={isOpen}
                     master={
-                        <WalletMasterView 
+                        <GroupSplitView 
                             activeWallet={activeWallet}
                             setActiveWallet={setActiveWallet}
                         />

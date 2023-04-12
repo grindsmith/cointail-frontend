@@ -1,11 +1,6 @@
 import * as actionTypes from './types';
 import Axios from 'axios';
 
-// Had to put it somewhere
-export const purge = () => ({
-  type: actionTypes.PURGE,
-});
-
 /**
  * WALLET DATABASE ACTIONS
  * GET GROUPS BY ACCOUNT
@@ -16,7 +11,6 @@ export const getWallet = (wallet) => {
   return (dispatch) => {
     Axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/wallet/${wallet}`)
     .then((res) => {
-      console.log(res.data, res.data)
       dispatch(setWallet(res.data.info, res.data.groups))
     })
   }
@@ -86,7 +80,6 @@ export const getWalletTransactions = (chain, network, wallet) => {
   return (dispatch) => {
     Axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/eth/${chain}/${network}/wallet/${wallet}/transactions`)
     .then((res) => {
-      console.log(res.data.transactions);
       if (chain === 'ethereum' && network === 'mainnet')
         dispatch(setWalletEthereumTransactions(res.data.transactions));
       else if (chain === 'arbitrum' && network === 'mainnet')

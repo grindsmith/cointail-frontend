@@ -1,17 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import WalletLinkCell from './walletLinkCell';
+import WalletLinkCell from '../wallet/walletLinkCell';
 import { 
     DataTable,
     DataTableColumn,
 } from '@salesforce/design-system-react';
 
-const WalletGroups = (props) => {
-  const { wallet } = props;
+const GroupDataTable = (props) => {
+  const { groups } = props;
 
   return (
     <DataTable
-      items={props.walletGroups}
+      items={groups}
       id="DataTableExample-headless"
       striped
       fixedLayout
@@ -20,7 +19,7 @@ const WalletGroups = (props) => {
       <DataTableColumn key="description" label="Description" property="description" />
       <DataTableColumn key="id" label="View" property="id">
         <WalletLinkCell
-          prefix={`/wallet/${wallet}/group`} 
+          prefix={`/group`} 
           linkLabel={true}
           sameTab={true}
         />
@@ -29,8 +28,4 @@ const WalletGroups = (props) => {
   );
 }
 
-const mapStateToProps = (state) => ({
-  walletGroups: state.wallet.groups,
-});
-
-export default connect(mapStateToProps, null)(WalletGroups);
+export default GroupDataTable;

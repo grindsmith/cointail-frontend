@@ -1,5 +1,6 @@
 // APP
 export const PURGE = 'PURGE';
+export const SET_ALL_GROUPS = 'SET_ALL_GROUPS';
 
 // WALLET
 export const SET_WALLET = "SET_WALLET";
@@ -10,6 +11,3 @@ export const SET_WALLET_ARBITRUM_TRANSACTIONS = 'SET_WALLET_ARBITRUM_TRANSACTION
 
 // GROUP
 export const SET_GROUP = 'SET_GROUP';
-
-// TOKENS
-export const SET_TOKEN_PAIRS = 'SET_TOKEN_PAIRS';

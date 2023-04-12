@@ -13,7 +13,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
   case actionTypes.SET_WALLET:
-    console.log(action.info, action.groups)
     return {
       ...state,
       info: {

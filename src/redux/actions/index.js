@@ -1,5 +1,10 @@
 export {
     purge,
+    getAllGroups,
+    setAllGroups
+} from './app.actions';
+
+export {
     getWallet,
     setWallet,
     postWallet,

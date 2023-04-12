@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 import { 
     Card,
-    DataTable,
-    DataTableColumn,
     Tabs,
     TabsPanel
 } from '@salesforce/design-system-react';
@@ -11,16 +9,14 @@ import {
 import WalletTransactions from "./walletTransactions";
 import WalletHeader from "./walletHeader";
 import WalletHoldings from "./walletHoldings";
-import WalletLinkCell from "./walletLinkCell";
-
 import {
     getWallet,
     getWalletTokens,
     getWalletTransactions,
 } from '../../../redux/actions';
-import WalletGroups from "./walletGroups";
+import GroupDataTable from "../group/groupDataTable";
 
-const WalletDetailView = (props) => {
+const WalletView = (props) => {
     const { wallet } = props;
 
     useEffect(() => {
@@ -70,9 +66,11 @@ const WalletDetailView = (props) => {
                     </Card>
                 </div>
                 <div className="slds-size_1-of-3">
-                    <Card heading="Groups">
-                        <WalletGroups
-                            wallet={wallet}
+                    <Card 
+                        heading="Groups"
+                    >
+                        <GroupDataTable
+                            groups={props.walletGroups}
                         />
                     </Card>
                 </div>
@@ -97,4 +95,4 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(getWalletTransactions(chain, network, wallet))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletDetailView);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletView);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
+import { useAddress } from "@thirdweb-dev/react";
 import { 
     Button,
     PageHeaderControl,
@@ -10,9 +10,7 @@ import {
     Modal
 } from '@salesforce/design-system-react';
 import { useParams } from 'react-router-dom';
-import {
-    putAppWallets,
-} from '../../../../redux/actions';
+import { putWallet } from '../../../redux/actions';
 
 const WalletHeader = (props) => {
     const address = useAddress();
@@ -32,8 +30,8 @@ const WalletHeader = (props) => {
                         content: props.walletEthereumTokens?.filter((tx) => tx.walletBalance > 0).length || 0
                     }
                 ]}
-                label={'0x' + wallet.substr(wallet.length - 6)}
-                title={props.appWallets.find((el) => el.address === wallet)?.name}
+                label={props.walletInfo.address}
+                title={props.walletInfo.name}
                 variant="record-home"
                 style={{
                     backgroundColor: '#fff !important'
@@ -65,7 +63,7 @@ const WalletHeader = (props) => {
                         label="Save" 
                         variant="brand" 
                         onClick={async () => {
-                            await props.putAppWallets(wallet, name)
+                            await props.putWallet(wallet, name)
                             await setIsOpen(false)
                         }}
                     />
@@ -80,14 +78,14 @@ const WalletHeader = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    walletArbitrumTokens: state.app.walletArbitrumTokens,
-    walletEthereumTokens: state.app.walletEthereumTokens,
-    appWallets: state.app.appWallets
+    walletArbitrumTokens: state.wallet.arbitrumTokens,
+    walletEthereumTokens: state.wallet.ethereumTokens,
+    walletInfo: state.wallet.info
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    putAppWallets : (wallet, name) =>
-        dispatch(putAppWallets(wallet, name)),
+    putWallet : (wallet, name) =>
+        dispatch(putWallet(wallet, name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletHeader);

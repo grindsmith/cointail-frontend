@@ -1,11 +1,6 @@
 * {
-    border-color: #f09d37 !important;
     border-radius: 0px !important;
     font-family: "IBM Plex Sans", "Salesforce Sans", "Helvetica" !important;
-}
-
-.slds-context-bar {
-    border-bottom: 2px solid #f09d37 !important;
 }
 
 .header-bar {

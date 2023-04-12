@@ -9,7 +9,7 @@ import {
 } from '@salesforce/design-system-react';
 import { 
     purge,
-    postAppWallets 
+    postWallet 
 } from "../../redux/actions";
 
 const Home = (props) => {
@@ -18,7 +18,7 @@ const Home = (props) => {
 
     const launchApp = async () => {
         if (address !== undefined) {
-            await props.postAppWallets(address);
+            await props.postWallet(address);
 
             navigate("/wallet/" + address);
         }
@@ -63,8 +63,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     purge: () => 
         dispatch(purge()),
-    postAppWallets: (wallet) => 
-        dispatch(postAppWallets(wallet))
+    postWallet: (wallet) => 
+        dispatch(postWallet(wallet))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

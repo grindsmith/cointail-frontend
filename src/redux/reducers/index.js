@@ -1,9 +1,12 @@
 import { combineReducers } from 'redux';
 import * as actionTypes from '../actions/types';
-import appReducer from './app.reducer';
+
+import groupReducer from './group.reducer';
+import walletReducer from './wallet.reducer';
 
 const reducer = combineReducers({
-  app: appReducer
+  wallet: walletReducer,
+  group: groupReducer
 });
 
 const rootReducer = (state, action) => {

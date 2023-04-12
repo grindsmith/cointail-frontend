@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { 
     DataTable,
     DataTableCell,
@@ -32,6 +32,7 @@ const WalletHoldings = (props) => {
             id="DataTableExample-headless"
             className="slds-truncate"
             fixedLayout
+            striped
         >
             {columns}
         </DataTable>

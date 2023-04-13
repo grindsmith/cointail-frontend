@@ -32,13 +32,13 @@ const WalletView = (props) => {
     return (
         <div className="slds-m-horizontal_small">
             <div className="slds-grid slds-wrap slds-p-top_small">
-                <div className="slds-size_1-of-1 slds-m-bottom_small">
+                <div className="slds-size_1-of-1">
                     <WalletHeader 
                         setIsOpen={props.setIsOpen}
                     />
                 </div>
-                <div className="slds-size_2-of-3 slds-p-right_small">
-                    <Card hasNoHeader>
+                <div className="slds-col slds-order_2 slds-medium-order_1 slds-small-size_1-of-1 slds-medium-size_2-of-3 slds-m-top_small slds-p-right_small">
+                    <Card hasNoHeader className="slds-truncate">
                         <Tabs className="slds-truncate">
                             <TabsPanel label="Arbitrum Transfers">
                                 <WalletTransactions 
@@ -65,7 +65,7 @@ const WalletView = (props) => {
                         </Tabs>
                     </Card>
                 </div>
-                <div className="slds-size_1-of-3">
+                <div className="slds-col slds-order_1 slds-medium-order_2 slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-m-top_small">
                     <Card 
                         heading="Groups"
                     >

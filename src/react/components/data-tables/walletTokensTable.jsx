@@ -32,6 +32,7 @@ const WalletHoldings = (props) => {
             id="DataTableExample-headless"
             className="slds-truncate"
             fixedLayout
+            keyboardNavigation
             striped
         >
             {columns}

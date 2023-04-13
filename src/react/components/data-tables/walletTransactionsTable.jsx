@@ -10,9 +10,10 @@ const WalletTransactions = (props) => {
             <DataTable
                 items={props.transactions.filter((tx) => tx.category !== "erc721")}
                 id="DataTableExample-headless"
-                striped
                 className="slds-truncate"
+                keyboardNavigation
                 fixedLayout
+                striped
             >
                 <DataTableColumn key="blockTimeStamp" label="Time" property="blockTimestamp" />
 

@@ -23,10 +23,10 @@ const WalletHeader = (props) => {
             <PageHeader
                 details={[
                     {
-                        label: '# of Arbitrum Tokens',
+                        label: 'Arbitrum Tokens',
                         content: props.walletArbitrumTokens?.filter((tx) => tx.walletBalance > 0).length || 0
                     },{
-                        label: '# of Ethereum Tokens',
+                        label: 'Ethereum Tokens',
                         content: props.walletEthereumTokens?.filter((tx) => tx.walletBalance > 0).length || 0
                     }
                 ]}

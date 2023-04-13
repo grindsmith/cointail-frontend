@@ -13,11 +13,15 @@ import {
 import CreateGroupWalletModal from "../modals/createGroupWalletModal";
 
 import { 
-    getAllWallets,
+    getAllWallets, 
+    postGroupWallet,
   } from '../../../redux/actions';
 
 const GroupMasterView = (props) => {
     const { groupId } = useParams();
+
+    const [selection, setSelection] = useState([]);
+    const [placeholder, setPlaceholder] = useState('Add New Wallets To Group');
 
     useEffect(() => {
         props.getAllWallets();
@@ -45,16 +49,34 @@ const GroupMasterView = (props) => {
                             options={props.allWallets}
                             labels={{
                                 label: null,
-                                placeholder: 'Add New Wallets To Group',
+                                placeholder: placeholder,
                             }}
                             variant="inline-listbox"
                             className="slds-truncate"
+                            selection={selection}
+                            events={{
+                                onSelect: (event, data) => {
+                                    setSelection(data.selection);
+                                },
+                                onRequestRemoveSelectedOption: (event, data) => {
+                                    setSelection([]);
+                                    setPlaceholder('Add New Wallets To Group');
+                                }
+                            }}
                         />
                     </div>
                     <div className="slds-size_1-of-4">
                         <Button 
                             label="Submit" 
                             variant="brand"
+                            onClick={async () => {
+                                if (selection.length > 0) {
+                                    console.log(selection[0].id, )
+                                    await props.postGroupWallet(selection[0].id, groupId)
+                                } else {
+                                    alert('selection has a length of 0')
+                                }
+                            }}
                         />
                     </div>
                 </div>
@@ -86,6 +108,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getAllWallets: () => 
         dispatch(getAllWallets()),
+    postGroupWallet: (walletId, groupId) => 
+        dispatch(postGroupWallet(walletId, groupId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupMasterView);

@@ -50,9 +50,9 @@ export const setAllWallets = (allWallets) => ({
  */
 export const postGroupWallet = (walletId, groupId) => {
   return (dispatch) => {
-    Axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/group-wallet`, {
-      'wallet_id': walletId,
-      'group_id': groupId
+    Axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/group-wallet`, {
+      'walletId': walletId,
+      'groupId': groupId
     })
     .catch((err) => console.log(err));
   }

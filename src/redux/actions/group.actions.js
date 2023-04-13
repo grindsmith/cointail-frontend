@@ -19,7 +19,6 @@ export const setGroup = (info, wallets) => ({
 });
 
 export const postGroup = (name, description, address) => {  
-
   return (dispatch) => {
     Axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/group`, {
       'name': name,

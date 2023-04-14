@@ -52,6 +52,20 @@ const WalletView = (props) => {
                                     transactions={props.walletEthereumTransactions}
                                 />
                             </TabsPanel>
+                        </Tabs>
+                    </Card>
+                </div>
+                <div className="slds-col slds-order_1 slds-medium-order_2 slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-m-top_small">
+                    <Card 
+                        heading="Groups"
+                    >
+                        <GroupDataTable
+                            groups={props.walletGroups}
+                        />
+                    </Card>
+
+                    <Card hasNoHeader className="slds-truncate slds-m-top_small">
+                        <Tabs className="slds-truncate">
                             <TabsPanel label="Arbitrum Holdings">
                                 <WalletHoldings 
                                     tokens={props.walletArbitrumTokens}
@@ -63,15 +77,6 @@ const WalletView = (props) => {
                                 />
                             </TabsPanel>
                         </Tabs>
-                    </Card>
-                </div>
-                <div className="slds-col slds-order_1 slds-medium-order_2 slds-small-size_1-of-1 slds-medium-size_1-of-3 slds-m-top_small">
-                    <Card 
-                        heading="Groups"
-                    >
-                        <GroupDataTable
-                            groups={props.walletGroups}
-                        />
                     </Card>
                 </div>
             </div>

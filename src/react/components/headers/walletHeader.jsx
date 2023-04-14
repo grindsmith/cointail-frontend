@@ -7,7 +7,7 @@ import {
     PageHeader,
     ButtonGroup,
     Input,
-    Modal
+    Modal,
 } from '@salesforce/design-system-react';
 import { useParams } from 'react-router-dom';
 import { putWallet } from '../../../redux/actions';

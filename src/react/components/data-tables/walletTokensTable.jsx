@@ -2,9 +2,9 @@ import React from "react";
 import { 
     DataTable,
     DataTableCell,
-    DataTableColumn
+    DataTableColumn,
+    Spinner
 } from "@salesforce/design-system-react";
-
 
 const TransactionCell = ({ children }) => {
     return (
@@ -27,16 +27,28 @@ const columns = [
 
 const WalletHoldings = (props) => {
     return (
-        <DataTable
-            items={props.tokens.filter((tx) => tx.walletBalance > 0)}
-            id="DataTableExample-headless"
-            className="slds-truncate"
-            fixedLayout
-            keyboardNavigation
-            striped
-        >
-            {columns}
-        </DataTable>
+        <div>
+            {props.tokens.length > 0 ? (
+                <DataTable
+                    items={props.tokens.filter((tx) => tx.walletBalance > 0)}
+                    id="DataTableExample-headless"
+                    className="slds-truncate"
+                    fixedLayout
+                    keyboardNavigation
+                    striped
+                >
+                    {columns}
+                </DataTable>
+            ): (
+                <div className="slds-m-vertical_xx-large">
+                    <Spinner
+                        size="medium"
+                        variant="base"
+                        assistiveText={{ label: 'Main Frame Loading...' }}
+                    />
+                </div>
+            )}
+        </div>
     )
 };
 

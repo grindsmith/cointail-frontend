@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { 
     Button,
     Card,
+    Icon,
     IconSettings
 } from '@salesforce/design-system-react';
 import { getAllGroups } from '../../redux/actions';
@@ -19,11 +20,12 @@ const Groups = (props) => {
   }, []);
 
   return (
-    <IconSettings iconPath="/icons">
+    <div>
       <AppHeader />
       <div style={{ marginTop: '0px', height: '87vh' }}>
         <Card 
           heading="Groups" 
+          icon={<Icon category="standard" name="groups" size="small" />}
           className="slds-m-around_small"
           headerActions={
             <Button 
@@ -42,7 +44,7 @@ const Groups = (props) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-    </IconSettings>
+    </div>
   )
 };
 

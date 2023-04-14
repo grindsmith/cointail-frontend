@@ -3,18 +3,16 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { 
     Button,
-    ButtonGroup,
     Combobox,
     Icon,
     PageHeader,
-    PageHeaderControl,
     SplitViewListbox 
 } from '@salesforce/design-system-react';
-import CreateGroupWalletModal from "../modals/createGroupWalletModal";
 
 import { 
     getAllWallets, 
     postGroupWallet,
+    getGroup
   } from '../../../redux/actions';
 
 const GroupMasterView = (props) => {
@@ -71,10 +69,8 @@ const GroupMasterView = (props) => {
                             variant="brand"
                             onClick={async () => {
                                 if (selection.length > 0) {
-                                    console.log(selection[0].id, )
-                                    await props.postGroupWallet(selection[0].id, groupId)
-                                } else {
-                                    alert('selection has a length of 0')
+                                    await props.postGroupWallet(selection[0].id, groupId);
+                                    setSelection([]);
                                 }
                             }}
                         />
@@ -108,6 +104,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getAllWallets: () => 
         dispatch(getAllWallets()),
+    getGroup: (groupId) => 
+        dispatch(getGroup(groupId)),
     postGroupWallet: (walletId, groupId) => 
         dispatch(postGroupWallet(walletId, groupId))
 });

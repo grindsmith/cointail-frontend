@@ -1,5 +1,5 @@
 import React from 'react';
-import WalletLinkCell from './linkDataCell';
+import LinkDataCell from './linkDataCell';
 import { 
     DataTable,
     DataTableColumn,
@@ -21,7 +21,7 @@ const GroupDataTable = (props) => {
           <DataTableColumn key="name" label="Group Name" property="name" />
           <DataTableColumn key="description" label="Description" property="description" />
           <DataTableColumn key="id" label="View" property="id">
-            <WalletLinkCell
+            <LinkDataCell
               prefix={`/group`} 
               linkLabel={true}
               sameTab={true}

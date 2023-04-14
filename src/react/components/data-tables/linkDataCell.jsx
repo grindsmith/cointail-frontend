@@ -12,10 +12,10 @@ const LinkDataCell = ({ children, ...props }) => {
   return (
     <DataTableCell {...props}>
       <a 
-        href={`${props.prefix}/${children}`}
+        href={props.prefix + "/" + children}
         target={props.sameTab ? "_self" : "_blank"}
         rel="noreferrer"
-        title={`${props.prefix}/${children}`}
+        style={{ zIndex: '10'}}
       >{label}</a>
     </DataTableCell>
   );

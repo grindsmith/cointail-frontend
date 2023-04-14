@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import { ConnectWallet, useAddress } from "@thirdweb-dev/react";
 import { 
     Button,
     Card,
-    IconSettings
+    IconSettings,
+    Input
 } from '@salesforce/design-system-react';
 import { 
     purge,
@@ -16,8 +17,14 @@ const Home = (props) => {
     const address = useAddress();
     const navigate = useNavigate();
 
+    const [wallet, setWallet] = useState('');
+
     const launchApp = async () => {
-        if (address !== undefined) {
+        if (wallet !== undefined && wallet !== '') {
+            await props.postWallet(wallet);
+
+            navigate("/wallet/" + wallet);
+        } else if (address !== undefined) {
             await props.postWallet(address);
 
             navigate("/wallet/" + address);
@@ -39,6 +46,12 @@ const Home = (props) => {
                     className="slds-grid" 
                     bodyClassName="slds-p-horizontal_small slds-p-top_small"
                 >
+                    <Input 
+                        value={wallet}
+                        onChange={(e) => setWallet(e.target.value)}
+                        placeholder="Enter Eth Address"
+                    />
+                    <div className="slds-p-vertical_small slds-align_absolute-center slds-text-title_caps">OR</div>
                     <ConnectWallet 
                         accentColor="#fff"
                         colorMode="dark"

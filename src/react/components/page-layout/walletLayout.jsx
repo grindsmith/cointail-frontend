@@ -63,8 +63,8 @@ const WalletView = (props) => {
                             groups={props.walletGroups}
                         />
                     </Card>
-
-                    <Card hasNoHeader className="slds-truncate slds-m-top_small">
+                    <div className="slds-m-top_small" />
+                    <Card hasNoHeader className="slds-truncate">
                         <Tabs className="slds-truncate">
                             <TabsPanel label="Arbitrum Holdings">
                                 <WalletHoldings 

@@ -17,9 +17,10 @@ TransactionCell.displayName = DataTableCell.displayName;
 
 const columns = [
     <DataTableColumn key="label" label="Token" property="label" />,
-    <DataTableColumn key="walletBalance" label="Balance" property="walletBalance" />,
-    <DataTableColumn key="priceChange1hr" label="1hr %" property="priceChange1hr" />,
+    <DataTableColumn key="priceUSD" label="Price" property="priceUSD" />,
     <DataTableColumn key="priceChange24hr" label="24hr %" property="priceChange24hr" />,
+    <DataTableColumn key="walletBalance" label="Balance" property="walletBalance" />,
+    <DataTableColumn key="holdings" label="Holdings" property="holdings" />,
     <DataTableColumn key="url" label="Chart" property="url">
         <TransactionCell />
     </DataTableColumn>,

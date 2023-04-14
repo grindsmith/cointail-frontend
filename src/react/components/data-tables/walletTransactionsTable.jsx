@@ -4,7 +4,7 @@ import {
     DataTableColumn,
     Spinner
 } from '@salesforce/design-system-react';
-import WalletLinkCell from './linkDataCell';
+import LinkDataCell from './linkDataCell';
 
 const WalletTransactions = (props) => {
     const { chain } = props;
@@ -16,26 +16,23 @@ const WalletTransactions = (props) => {
                     items={props.transactions.filter((tx) => tx.category !== "erc721")}
                     id="DataTableExample-headless"
                     className="slds-truncate"
-                    keyboardNavigation
                     fixedLayout
                     striped
                 >
-                    <DataTableColumn key="blockTimeStamp" label="Time" property="blockTimestamp" />
+                    <DataTableColumn key="blockTimeStamp" label="Time" property="blockTimestamp" width="175px" />
 
                     <DataTableColumn key="action" label="Action" property="action" width="80px" />
 
-                    <DataTableColumn key="summary" label="Summary" property="summary" width="250px" />
-
-                    <DataTableColumn key="gas" label="Gas (ETH)" property="gas" />
+                    <DataTableColumn key="summary" label="Summary" property="summary" width="280px" />
 
                     <DataTableColumn 
                         key="contractAddress" 
-                        label="Chart" 
+                        label="Sent" 
                         property="contractAddress" 
                         width="80px"
                     >
-                        <WalletLinkCell 
-                            prefix={`https://dexscreener.com/${chain}`} 
+                        <LinkDataCell 
+                            prefix={"https://dexscreener.com/" + chain} 
                             linkLabel={false}
                             assetTwo={false}
                         />
@@ -43,11 +40,11 @@ const WalletTransactions = (props) => {
 
                     <DataTableColumn 
                         key="contractAddressTwo" 
-                        label="Chart" 
+                        label="Received" 
                         property="contractAddressTwo" 
                         width="80px"
                     >
-                        <WalletLinkCell 
+                        <LinkDataCell 
                             prefix={`https://dexscreener.com/${chain}`} 
                             linkLabel={false}
                             assetTwo={true}
@@ -60,12 +57,13 @@ const WalletTransactions = (props) => {
                         property="hash"
                         width="90px"
                     >
-                        <WalletLinkCell 
+                        <LinkDataCell 
                             prefix={props.chain === 'ethereum' ? `https://etherscan.io/tx` : `https://arbiscan.io/tx`} 
                             linkLabel={true}
                             assetTwo={false}
                         />
                     </DataTableColumn>
+                    <DataTableColumn key="gas" label="Gas (ETH)" property="gas" />
                 </DataTable>
             ) : (
                 <div className="slds-m-vertical_xx-large">

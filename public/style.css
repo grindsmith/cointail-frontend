@@ -19,6 +19,6 @@
     margin-top: 0px !important;
 }
 
-.slds-tabs_scoped__content {
+.slds-tabs_scoped__content, .slds-tabs_default__content {
     padding: 0 !important;
 }

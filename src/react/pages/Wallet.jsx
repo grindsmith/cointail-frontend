@@ -1,43 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from 'react-redux';
-import {
-    IconSettings,
-    SplitView,
+import { 
+  IconSettings 
 } from '@salesforce/design-system-react';
 
-import Header from "../components/app/AppHeader";
-import WalletMasterView from "../components/wallet/walletMasterView";
-import WalletDetailView from "../components/wallet/walletDetailView";
+import { useParams } from "react-router-dom";
+import { getWallet } from "../../redux/actions";
+import WalletLayout from "../components/page-layout/walletLayout";
+import AppHeader from "../components/headers/appHeader";
 
-const WalletDetails = (props) => {
-    const [isOpen, setIsOpen] = useState(true);
-    const [selected, setSelected] = useState([]);
+const Wallet = (props) => {
+  const { wallet } = useParams();
 
-    return (
-        <IconSettings iconPath="/assets/icons">
-            <Header />
-            <div style={{ marginTop: '0px', height: '88vh' }}>
-                <SplitView
-                    events={{
-                        onClose: () => setIsOpen(false),
-                        onOpen: () => setIsOpen(true),
-                    }}
-                    id="base-example"
-                    isOpen={isOpen}
-                    master={<WalletMasterView selected={selected} setSelected={setSelected} />}
-                    detail={
-                        <WalletDetailView 
-                            setIsOpen={setIsOpen}
-                            selected={selected} 
-                            setSelected={setSelected} 
-                        />}
-                />
-            </div>
-        </IconSettings>
-    )
+  useEffect(() => {
+    props.getWallet(wallet);
+  },[])
+
+  return (
+    <IconSettings iconPath="/icons">
+      <AppHeader />
+      <div style={{ marginTop: '0px', height: '87vh' }}>
+        <WalletLayout 
+          wallet={wallet}
+        />
+      </div>
+    </IconSettings>
+  )
 };
 
-const mapStateToProps = (state) => ({});
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  getWallet: (wallet) => 
+    dispatch(getWallet(wallet))
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletDetails);
+export default connect(null, mapDispatchToProps)(Wallet);

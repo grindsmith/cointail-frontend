@@ -1,11 +1,5 @@
 * {
-    border-color: #f09d37 !important;
-    border-radius: 0px !important;
     font-family: "IBM Plex Sans", "Salesforce Sans", "Helvetica" !important;
-}
-
-.slds-context-bar {
-    border-bottom: 2px solid #f09d37 !important;
 }
 
 .header-bar {
@@ -25,6 +19,6 @@
     margin-top: 0px !important;
 }
 
-.slds-tabs_scoped__content {
+.slds-tabs_scoped__content, .slds-tabs_default__content {
     padding: 0 !important;
 }

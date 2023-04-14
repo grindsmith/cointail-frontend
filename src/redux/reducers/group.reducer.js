@@ -2,21 +2,21 @@
 import * as actionTypes from '../actions/types';
 
 const initialState = {
-  allGroups: [],
-  allWallets: [],
+  info: {},
+  wallets: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_ALL_GROUPS:
+    case actionTypes.SET_GROUP:
       return {
         ...state,
-        allGroups: [...action.allGroups],
-      };
-    case actionTypes.SET_ALL_WALLETS:
-      return {
-        ...state,
-        allWallets: [...action.allWallets],
+        info: {
+          name: action.info.name,
+          description: action.info.description,
+          ownerId: action.info.ownerId
+        },
+        wallets: [...action.wallets],
       };
     default:
       return state;

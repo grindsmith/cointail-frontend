@@ -1,17 +1,27 @@
 export {
     purge,
-    getAppWallets,
-    postAppWallets,
-    putAppWallets,
-    setAppWallets,
-    getTokenPairs,
-    setTokenPairs,
-    getWalletEthereumTransactions,
-    getWalletArbitrumTransactions,
+    getAllGroups,
+    setAllGroups,
+    getAllWallets,
+    setAllWallets,
+    postGroupWallet
+} from './app.actions';
+
+export {
+    getWallet,
+    setWallet,
+    postWallet,
+    putWallet,
+    getWalletTokens,
+    getWalletTransactions,
     setWalletEthereumTransactions,
     setWalletArbitrumTransactions,
-    getWalletEthereumTokens,
     setWalletEthereumTokens,
-    getWalletArbitrumTokens,
     setWalletArbitrumTokens
-} from './app.actions';
+} from './wallet.actions';
+
+export {
+    postGroup,
+    getGroup,
+    setGroup
+} from './group.actions';

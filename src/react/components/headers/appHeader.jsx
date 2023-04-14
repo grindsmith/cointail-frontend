@@ -18,6 +18,7 @@ const AppHeader = () => {
                 
                 <GlobalNavigationBarRegion region="secondary">
                     <GlobalNavigationBarLink label="Home" href="/" />
+                    <GlobalNavigationBarLink label="Groups" href="/groups" />
                 </GlobalNavigationBarRegion>
                 <GlobalNavigationBarRegion region="tertiary">
                     <div className="slds-p-vertical_xx-small slds-p-right_small">

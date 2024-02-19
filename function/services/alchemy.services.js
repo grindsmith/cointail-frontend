@@ -103,11 +103,28 @@ async function getWalletTransactions(networkSettings, accountAddress, numberOfTr
 async function filterWalletTokens(accountTokens) {
   console.log(`Service: filterWalletTokens`);
 
-  return accountTokens.filter((token) => token.walletBalance > 0).sort((a, b) => {
-    if (a.label < b.label) return -1;
-    else if (a.label > b.label) return 1;
+  const filteredTokens = [];
+  for (let i = 0; i < accountTokens.length; i++) {
+    if (accountTokens[i].walletBalance > 0) {
+      const dexData = await Axios.get(`https://api.dexscreener.com/latest/dex/tokens/${accountTokens[i].contractAddress}`);
+
+      if (dexData.data.pairs?.length > 0) {
+        accountTokens[i].pairs = dexData.data.pairs?.length;
+        accountTokens[i].priceUsd = dexData.data.pairs[0].priceUsd;
+        accountTokens[i].holdings = accountTokens[i].walletBalance * dexData.data.pairs[0].priceUsd;
+
+        filteredTokens.push(accountTokens[i]);
+      }
+    }
+  }
+  
+  const sortedTokens = await filteredTokens.sort((a, b) => {
+    if (a.pairs < b.pairs) return -1;
+    else if (a.pairs > b.pairs) return 1;
     else return 0;
   })
+
+  return sortedTokens;
 }
 
 /**

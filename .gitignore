@@ -1,4 +1,7 @@
 .firebase/
+hosting/.firebase/
+function/.firebase/
+function/cointail-7b094-firebase-adminsdk-3pysg-a82e3d1976.json
 
 .env
 function/.env

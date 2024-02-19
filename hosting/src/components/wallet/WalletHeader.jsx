@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 
 import { Row, Col, Button, Card } from 'antd';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const WalletHeader = (props) => {
-
+  const { wallet } = useParams();
 
   const { walletMetadata } = props;
 
@@ -14,13 +14,12 @@ const WalletHeader = (props) => {
   return (
     <>
         <Card 
-            type="inner" 
             title={walletMetadata.name} 
-            extra={<Button 
+            extra={wallet !== walletMetadata.address ? (<Button 
                     onClick={() => navigate(`/wallet/${walletMetadata.address}`, { replace: true })}
                     type={'default'}
                 >View</Button>
-            }
+            ) : <></>}
         >
             
             <Row>

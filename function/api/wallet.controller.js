@@ -1,6 +1,10 @@
 require('dotenv').config();
 
 const Alchemy = require('../services/alchemy.services');
+const { 
+    getWalletDocuments, 
+    getAllDocuments 
+} = require('../services/firestore.services');
 
 async function getWalletTokens(req, res) {
     console.log('API Endpoint: getWalletTokens');
@@ -28,8 +32,6 @@ async function getWalletTransactions(req, res) {
     const { wallet } = req.params;
 
     const { chain, network } = req.query;
-
-    console.log(chain, network, wallet);
   
     try {
         let settings = await Alchemy.setNetworkEndpoint(chain, network, 'getWalletTransactions');
@@ -49,26 +51,25 @@ async function getWalletTransactions(req, res) {
 async function getWallets(req, res) {
     console.log('API Endpoint: getWallets');
 
-    const wallets = [{
-        'address': '0x8a76eA819F06b974b75f22C63727c7335f7ebdc3',
-        'name': 'Evan',
-        'chain': 'ethereum'
-    },{
-        'address': '0xadf27ee1A23D5Df947d37CF65f1a10872e03d333',
-        'name': 'Soham',
-        'chain': 'ethereum'
-    },{
-        'address': '0xEBe035dA5DF98E8297D31cFD1c249732a6d6d3bA',
-        'name': 'Evan',
-        'chain': 'ethereum'
-    }];
+    const walletDocuments = await getAllDocuments("wallet");
 
-    return res.json({ 'wallets': wallets});
+    console.log(walletDocuments)
+
+    return res.json({ 'wallet': walletDocuments});
+}
+
+async function getWallet(req, res) {
+    const { wallet } = req.params;
+
+    const walletDoc = await getWalletDocuments("wallet", "address", wallet);
+
+    return res.json({ 'wallet': walletDoc});
 }
 
 
 module.exports = {
     getWalletTokens,
     getWalletTransactions,
-    getWallets
+    getWallets,
+    getWallet
 };

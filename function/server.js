@@ -5,6 +5,16 @@ const express = require('express');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+
+// Initialize Firebase Admin SDK with your service account credentials
+const serviceAccountKey = require('./cointail-7b094-firebase-adminsdk-3pysg-a82e3d1976.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccountKey)
+});
+
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
 
@@ -18,12 +28,14 @@ app.use(cors());
 // Controllers
 const { 
   getWallets, 
+  getWallet,
   getWalletTokens, 
   getWalletTransactions, 
 } = require('./api/wallet.controller');
 
 // API ROUTES
 app.get('/api/wallets', getWallets);
+app.get('/api/wallet/:wallet', getWallet);
 app.get('/api/wallet/:wallet/tokens', getWalletTokens);
 app.get('/api/wallet/:wallet/transactions', getWalletTransactions);
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -57,10 +69,12 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 // Serve the app
-app.listen(PORT, () => {
-  console.log('Server running at port:' + PORT);
-});
-
-const functions = require("firebase-functions");
+/*
+if (process.env.NODE_ENV === "local") {
+  app.listen(PORT, () => {
+    console.log('Server running at port:' + PORT);
+  });
+}
+*/
 
 exports.api_cointail_production = functions.https.onRequest(app);

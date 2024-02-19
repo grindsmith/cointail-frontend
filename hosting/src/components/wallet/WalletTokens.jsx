@@ -5,16 +5,12 @@ import { Row, Col, Card, Divider, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const WalletTokens = (props) => {
-    const { wallet, walletTokens } = props;
-
-    const formatTokens = async () => {
-
-    }
+    const { chain, wallet, walletTokens } = props;
 
     return (
         <>
             <Card 
-                title="Wallet Tokens" 
+                title={`Tokens (${walletTokens.length})`} 
                 type="inner"
             >
                 {walletTokens.length === 0 ? (
@@ -22,9 +18,9 @@ const WalletTokens = (props) => {
                 ): (
                     walletTokens.map((token) => {
                         return (
-                            <>
-                                <Row key={token.asset} className="slds-p-around_small">
-                                    <Col span={3} align="center">
+                            <div key={token.asset} className="slds-p-around_small">
+                                <Row>
+                                    <Col span={3} align="left">
                                         <img 
                                             src={token.logo}
                                             style={{
@@ -35,13 +31,22 @@ const WalletTokens = (props) => {
                                         />
                                     </Col>
                                     <Col span={13}>
-                                        <div>{token.name}</div>
-                                        <div style={{ fontSize: '10px'}}><a href="#">Token Contract</a></div>
+                                        <div>{token.name} (${token.symbol})</div>
                                     </Col>
-                                    <Col span={8} align="right">{parseFloat(token.walletBalance) > 0 ? parseFloat(token.walletBalance).toFixed(0) : parseFloat(token.walletBalance).toFixed(5)}</Col>
+                                    <Col span={8} align="right">${token.holdings.toFixed(2)}</Col>
+                                </Row>
+                                <Row>
+                                    <Col span={3} align="center">
+                                    </Col>
+                                    <Col span={13}>
+                                        <div style={{ fontSize: '10px'}}>
+                                            <a href={`https://dexscreener.com/${chain}/${token.contractAddress}`} target="_blank">Chart</a> - {token.pairs} Pairs
+                                        </div>
+                                    </Col>
+                                    <Col span={8} align="right" style={{ fontSize: '10px'}}>{parseFloat(token.walletBalance) > 1 ? parseFloat(token.walletBalance).toFixed(0) : parseFloat(token.walletBalance).toFixed(5)}</Col>
                                 </Row>
                                 <Divider style={{ margin: 0 }} />
-                            </>
+                            </div>
                         )
                     })
                 )}

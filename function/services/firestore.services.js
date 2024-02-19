@@ -1,26 +1,34 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { firestoreDB } from '../../../firebase';
+const admin = require('firebase-admin');
 
-export const getAllDocuments = async (table) => {
-    const querySnapshot = await getDocs(collection(firestoreDB, table));
+const firestore = admin.firestore();
 
-    return querySnapshot.docs.map((doc) => {
-      return {
-        id: doc.id, 
-        ...doc.data()
-      }
-    });
+const getAllDocuments = async (table) => {
+  const collectionRef = firestore.collection(table);
+
+  const querySnapshot = await collectionRef.get();
+
+  return querySnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data()
+    };
+  });
 }
 
-export const getWalletDocuments = async (table, field, value) => {
-    const q = query(collection(firestoreDB, table), where(field, "==", value));
+const getWalletDocuments = async (table, field, value) => {
+  const collectionRef = firestore.collection(table);
 
-    const querySnapshot = await getDocs(q);
+  const querySnapshot = await collectionRef.where(field, "==", value).get();
 
-    return querySnapshot.docs.map((doc) => {
-        return {
-          id: doc.id, 
-          ...doc.data()
-        }
-    });
+  return querySnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data()
+    };
+  });
 }
+
+module.exports = {
+  getAllDocuments,
+  getWalletDocuments
+};

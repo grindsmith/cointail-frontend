@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Typography } from 'antd';
 const { Title } = Typography;
 
-const MetricCard = (props) => {
+const WalletMetricCard = (props) => {
   return (
     <Card bordered={true}>
       <div className="number">
         <Row  gutter={[24, 0]}>
-          <Col xs={12}>
+          <Col xs={24}>
             <span>{props.title}</span>
-            <div>{props.percent ? (<small>{props.percent}% of Portfolio</small>) : null}</div>
-          </Col>
-          <Col xs={12}>
-            <Title level={3} style={{ marginTop: '0'}}>
-              {props.symbol}{props.amount} 
+            <Title level={3} style={{ marginTop: '0'}}>{props.metric}</Title>
+            <Title level={5} style={{ marginTop: '0'}}>
+              {props.metricType}
             </Title>
           </Col>
         </Row>
@@ -22,4 +20,4 @@ const MetricCard = (props) => {
   );
 };
 
-export default MetricCard;
+export default WalletMetricCard;

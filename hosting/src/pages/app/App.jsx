@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import Axios from 'axios';
-import { Col, Input, Row, Button, Card, Modal } from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
+import { Col, Input, Row, Button, Card, Modal, Spin } from 'antd';
+import { ReloadOutlined, LoadingOutlined } from '@ant-design/icons';
 
 // Styles
 import './App.css'
-import WalletHeader from './components/WalletHeader';
+import WalletHeader from '../../components/wallet/WalletHeader';
 
 function App() {
   // All Wallets
@@ -18,21 +18,24 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallets`).then((res) => setWallets(res.data.wallets))
+    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallets`).then((res) => setWallets(res.data.wallet));
   }, []);
+
+  console.log(wallets)
 
   const addWallet = async () => {
     //const newDoc = await firestoreDB.collection('wallet').add({ name, address, chain });
   }
 
   return (
-    <>
-      <h1 style={{ textAlign: 'left'}}>Cointail</h1>
+    <div className="root">
+      <h1 style={{ textAlign: 'left', color: '#fff', paddingTop: '3rem'}}>Cointail</h1>
       <h2 style={{ textAlign: 'left', color: '#f37925' }}>Select A Wallet</h2>
       <Row>
         <Col span={24}>
           <Card 
-            title=""
+            title="WAGMI Wallets"
+            type="inner"
             style={{ minWidth: '50vw'}}
             extra={
               <>
@@ -49,16 +52,19 @@ function App() {
             }
           >
             <Row>
-              {wallets.map((walletMetadata) => {
-                return (
-                  <Col span={12} style={{ padding: '.75rem'}}>
-                    <WalletHeader walletMetadata={walletMetadata} />
-                  </Col>
-                )
-              })}
+              {wallets.length === 0 ? (
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+              ): (
+                wallets.map((walletMetadata) => {
+                  return (
+                    <Col key={walletMetadata.address} span={12} style={{ padding: '.75rem'}}>
+                      <WalletHeader walletMetadata={walletMetadata} />
+                    </Col>
+                  )
+                }
+              ))}
             </Row>
           </Card>
-
         </Col>
         <Modal 
           title="Add New Wallet" 
@@ -72,7 +78,7 @@ function App() {
           <Button onClick={addWallet}>Add Wallet</Button>
         </Modal>
       </Row>
-    </>
+    </div>
   )
 }
 

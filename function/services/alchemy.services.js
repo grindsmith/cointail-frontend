@@ -219,6 +219,8 @@ async function setNetworkEndpoint(chain, network, functionName) {
     settings = { apiKey: process.env.ALCHEMY_API_KEY, network: Network.ETH_MAINNET };
   } else if (chain === 'arbitrum' && network === 'mainnet') {
     settings = { apiKey: process.env.ALCHEMY_API_KEY, network: Network.ARB_MAINNET };
+  } else if (chain === 'base' && network === 'mainnet') {
+    settings = { apiKey: process.env.ALCHEMY_API_KEY, network: Network.BASE_MAINNET };
   }
 
   return settings;

@@ -53,12 +53,12 @@ async function getWallets(req, res) {
 
     const walletDocuments = await getAllDocuments("wallet");
 
-    console.log(walletDocuments)
-
-    return res.json({ 'wallet': walletDocuments});
+    return res.json({ 'wallets': walletDocuments});
 }
 
 async function getWallet(req, res) {
+    console.log('API Endpoint: getWallet');
+
     const { wallet } = req.params;
 
     const walletDoc = await getWalletDocuments("wallet", "address", wallet);

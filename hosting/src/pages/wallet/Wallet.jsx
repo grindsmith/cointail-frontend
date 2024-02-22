@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Row, Col, Card, Select } from 'antd';
+import { useCallback, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Row, Col, Card, Select, Spin, Layout, Menu, Statistic } from 'antd';
+const { Header, Content, Footer } = Layout;
+import { LoadingOutlined } from '@ant-design/icons';
 import Moment from 'moment-timezone';
 import Axios from 'axios';
 
@@ -13,77 +15,107 @@ import WalletMetricCard from "../../components/wallet/WalletMetricCard";
 const Wallet = () => {
   const { wallet } = useParams();
 
+  const navigate = useNavigate();
+
   const [walletMetadata, setWalletMetadata] = useState({});
   const [walletTokens, setWalletTokens] = useState([]);
   const [walletTransactions, setWalletTransactions] = useState([]);
   const [activeChain, setActiveChain] = useState('arbitrum');
-
   const [wallets, setWallets] = useState([]);
+  const [items, setItems] = useState([{ key: 1, label: `Home`}, { key: 2, label: `Wallet`}])
 
   useEffect(() => {
+    getWallets();
+
     getWalletTokensAndTransactions(activeChain);
+  }, [wallet, activeChain])
 
-    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallets`).then((res) => setWallets(res.data.wallet));
-  }, [activeChain]);
+  const getWallets = useCallback(() => {
+    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallets`).then((res) => {
+      if (res.data.wallets) {
+        setWallets(res.data.wallets)
+      } else {
+        console.log(res.data);
+      }
+    });
+  }, []);
 
-  const getWalletTokensAndTransactions = async (chain) => {
-    await Axios.get(`${import.meta.env.VITE_API_URL}/api/wallet/${wallet}`)
-      .then((res) => res.data.wallet?.length > 0 ? setWalletMetadata(res.data.wallet[0]) : setWalletMetadata({}))  
-      .catch((err) => console.log("Tokens Error: ", err));
-  
-    await Axios.get(`${import.meta.env.VITE_API_URL}/api/wallet/${wallet}/tokens?chain=${chain}&network=mainnet`)
-      .then((res) => setWalletTokens(res.data.tokens))  
-      .catch((err) => console.log("Tokens Error: ", err));
-  
-    await Axios.get(`${import.meta.env.VITE_API_URL}/api/wallet/${wallet}/transactions?chain=${chain}&network=mainnet`)
-      .then((res) => setWalletTransactions(res.data.transactions))
-      .catch((err) => console.log("Transactions Error: ", err.message));
+  const handleHeaderClick = (key) => {
+    console.log(key)
+    if (key === '1') {
+      navigate('/');
+    } else if (key === '2') {
+      console.log('Wallet Header Item Click')
+    }
   }
 
+  const getWalletTokensAndTransactions = useCallback((chain) => {
+    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallet/${wallet}`)
+      .then((res) => {
+        if (res.data?.wallet) {
+          setWalletMetadata(res.data.wallet[0]);
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((err) => console.log("Wallet Error: ", err));
+  
+    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallet/${wallet}/tokens?chain=${chain}&network=mainnet`)
+      .then((res) => {
+        if (res.data?.tokens) {
+          setWalletTokens(res.data.tokens)
+        } else {
+          console.log(res);
+        }
+      })  
+      .catch((err) => console.log("Tokens Error: ", err));
+  
+    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallet/${wallet}/transactions?chain=${chain}&network=mainnet`)
+      .then((res) => {
+        if (res.data?.transactions) {
+          setWalletTransactions(res.data.transactions)
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((err) => console.log("Transactions Error: ", err.message));
+  }, [wallet, activeChain]);
+
   return (
-    <div className="root">
-      <Row>
-        <Col span={16} className="slds-p-around_medium">
-          <WalletHeader
-            walletMetadata={walletMetadata}
-          />
-          <Row style={{ marginTop: '1rem', marginBottom: '1rem'}}>
-            <Col span={6} style={{ padding: '5px'}}>
-              <WalletMetricCard
-                title={`Past 24 Hours`}
-                metric={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(24, 'hours')).length}
-                metricType={`Transactions`}
-              />
-            </Col>
-            <Col span={6} style={{ padding: '5px'}}>
-              <WalletMetricCard
-                title={`Past 7 Days`}
-                metric={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(7, 'days')).length}
-                metricType={`Transactions`}
-              />
-            </Col>
-            <Col span={6} style={{ padding: '5px'}}>
-              <WalletMetricCard
-                title={`Past 30 Days`}
-                metric={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(30, 'days')).length}
-                metricType={`Transactions`}
-              />
-            </Col>
-            <Col span={6} style={{ padding: '5px'}}>
-              <WalletMetricCard
-                title={`Past 365 Days`}
-                metric={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(365, 'days')).length}
-                metricType={`Transactions`}
-              />
-            </Col>
-          </Row>
-          <WalletTransactions 
-            wallet={wallet}
-            walletTransactions={walletTransactions} 
-          />
-        </Col>
-        <Col span={8} className="slds-p-around_medium" >
-          <Card title="Actions" type="inner" style={{ marginBottom: '1rem'}}>
+    <Layout>
+      <Header
+        style={{ 
+          position: 'fixed', 
+          zIndex: 1, 
+          width: '100%', 
+          alignItems: 'center', 
+          display: 'flex' 
+        }}
+      >
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['2']}
+          items={items}
+          onClick={(e) => handleHeaderClick(e.key)}
+          style={{
+            flex: 1,
+            minWidth: 0,
+          }}
+        />
+      </Header>
+      <Content
+        style={{
+          padding: '0 15%',
+          marginTop: 64 
+        }}
+      >
+        <Row>
+          <Col span={16} className="slds-p-around_medium">
+            <WalletHeader
+              walletMetadata={walletMetadata}
+            />
+            <h3>Actions</h3>
             <Select
               title="Change Chain"
               defaultValue={activeChain}
@@ -96,28 +128,48 @@ const Wallet = () => {
               options={[
                 { value: 'ethereum', label: 'Ethereum' },
                 { value: 'arbitrum', label: 'Arbitrum' },
+                { value: 'base', label: 'Base' },
               ]}
             />   
-          </Card>
-
-          <WalletTokens
-            style={{ marginTop: '1rem'}}
-            chain={activeChain}
-            wallet={wallet}
-            walletTokens={walletTokens} 
-          />
-          <Card title={'Other Wallets'} style={{ marginTop: '1rem'}} type="inner">
-            {wallets.map((walletMetadata, i) => {
+            <WalletTokens
+              style={{ marginTop: '1rem'}}
+              chain={activeChain}
+              wallet={wallet}
+              walletTokens={walletTokens} 
+            />
+            <WalletTransactions 
+              wallet={wallet}
+              walletTransactions={walletTransactions} 
+            />
+          </Col>
+          <Col span={8} className="slds-p-around_medium" >
+            
+            <Row style={{ margin: '1rem' }}>
+              <Col span={6} style={{ padding: '5px'}}>
+                <Statistic title="Past 24 Hours" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(24, 'hours')).length} />
+              </Col>
+              <Col span={6} style={{ padding: '5px'}}>
+                <Statistic title="Past 7 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(7, 'days')).length} />
+              </Col>
+              <Col span={6} style={{ padding: '5px'}}>
+                <Statistic title="Past 30 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(30, 'days')).length} />
+              </Col>
+              <Col span={6} style={{ padding: '5px'}}>
+                <Statistic title="Past 365 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(365, 'days')).length} />
+              </Col>
+            </Row>
+            <h3>Other Wallets</h3>
+            {wallets.length > 0 ? wallets.map((walletMetadata, i) => {
               return (
                 <div key={i} style={{ marginTop: '.5rem'}}>
                   <WalletHeader walletMetadata={walletMetadata} />
                 </div>
               )
-            })}
-          </Card>
-        </Col>
-      </Row>
-    </div>
+            }) : (<Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />)}
+          </Col>
+        </Row>
+      </Content>
+    </Layout>
   )
 };
 

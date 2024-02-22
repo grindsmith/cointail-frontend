@@ -18,10 +18,20 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallets`).then((res) => setWallets(res.data.wallet));
+    getAllWallets();
   }, []);
 
-  console.log(wallets)
+  const getAllWallets = () => {
+    Axios.get(`${import.meta.env.VITE_API_URL}/api/wallets`)
+    .then((res) => {
+      if (res.data) {
+        setWallets(res.data.wallets)
+      } else {
+        console.log(res);
+      }
+    })
+    .catch((err) => console.log(err));
+  }
 
   const addWallet = async () => {
     //const newDoc = await firestoreDB.collection('wallet').add({ name, address, chain });
@@ -41,8 +51,8 @@ function App() {
               <>
                 <Button 
                   icon={<ReloadOutlined />}
-                  onClick={() => getAllDocuments('wallet').then((result) => setWallets(result))}
-                />
+                  onClick={() => getAllWallets().then((result) => setWallets(result))}
+                />        
                 <Button 
                   type="primary"
                   style={{ marginLeft: '5px'}}

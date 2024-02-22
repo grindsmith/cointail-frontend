@@ -11,8 +11,7 @@
       ],
       "env": {
         "NODE_ENV": "production",
-        "ALCHEMY_API_KEY": "4zCwn0JqW90GVky38PkaIaKYK-zQF1vu",
-        "FIREBASE_CONFIG_API_KEY": "AIzaSyA818pWk3qsVyJw7-QOR6309diGXjv2fRQ"
+        "ALCHEMY_API_KEY": "4zCwn0JqW90GVky38PkaIaKYK-zQF1vu"
       }
     }
   ]

@@ -69,12 +69,10 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 // Serve the app
-/*
 if (process.env.NODE_ENV === "local") {
   app.listen(PORT, () => {
     console.log('Server running at port:' + PORT);
   });
 }
-*/
 
 exports.api_cointail_production = functions.https.onRequest(app);

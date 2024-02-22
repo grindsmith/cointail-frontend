@@ -12,24 +12,22 @@ const WalletHeader = (props) => {
   const navigate = useNavigate();
 
   return (
-    <>
-        <Card 
-            title={walletMetadata.name} 
-            extra={wallet !== walletMetadata.address ? (<Button 
-                    onClick={() => navigate(`/wallet/${walletMetadata.address}`, { replace: true })}
-                    type={'default'}
-                >View</Button>
-            ) : <></>}
-        >
-            
-            <Row>
-                <Col span={24}>
-                    <div>{walletMetadata.address?.substring(0,25)}</div>
-                    <div style={{ fontWeight: '600', fontSize: '14px' }}>{walletMetadata.chain?.toUpperCase()}</div>
-                </Col>
-            </Row>            
-        </Card>
-    </>
+    <Card>
+        <Row>
+            <Col span={18}>
+                <div>{walletMetadata.name}</div>
+                <small style={{ fontWeight: '400'}}>{walletMetadata.chain === 'ethereum' ? `0x${walletMetadata.address?.slice(5)}` : walletMetadata.address}</small>
+            </Col>
+            <Col span={6}>
+                {wallet !== walletMetadata.address ? (
+                    <Button 
+                        onClick={() => navigate(`/wallet/${walletMetadata.address}`, { replace: true })}
+                        type={'default'}
+                    >View</Button>
+                ) : (<></>)}
+            </Col>
+        </Row>
+    </Card>         
   )
 };
 

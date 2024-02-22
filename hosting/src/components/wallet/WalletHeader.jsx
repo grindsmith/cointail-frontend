@@ -4,27 +4,27 @@ import { Row, Col, Button, Card } from 'antd';
 
 import { useNavigate, useParams } from "react-router-dom";
 
-const WalletHeader = (props) => {
+const WalletHeader = ({ walletMetadata, child }) => {
   const { wallet } = useParams();
 
-  const { walletMetadata } = props;
-
   const navigate = useNavigate();
+
+  console.log(child)
 
   return (
     <Card>
         <Row>
             <Col span={18}>
-                <div>{walletMetadata.name}</div>
-                <small style={{ fontWeight: '400'}}>{walletMetadata.chain === 'ethereum' ? `0x${walletMetadata.address?.slice(5)}` : walletMetadata.address}</small>
+                <h4>{walletMetadata.name}</h4>
+                <small className="slds-truncate">{walletMetadata.chain === 'ethereum' ? `0x${walletMetadata.address?.slice(5)}` : walletMetadata.address?.slice(5)}</small>
             </Col>
-            <Col span={6}>
+            <Col span={6} align="right">
                 {wallet !== walletMetadata.address ? (
                     <Button 
                         onClick={() => navigate(`/wallet/${walletMetadata.address}`, { replace: true })}
                         type={'default'}
                     >View</Button>
-                ) : (<></>)}
+                ) : (child?.length > 0 ? child[0] : null)}
             </Col>
         </Row>
     </Card>         

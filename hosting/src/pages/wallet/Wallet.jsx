@@ -114,36 +114,33 @@ const Wallet = () => {
           <Col span={16} className="slds-p-around_medium">
             <WalletHeader
               walletMetadata={walletMetadata}
-            />
-            <h3>Actions</h3>
-            <Select
-              title="Change Chain"
-              defaultValue={activeChain}
-              style={{ width: 120 }}
-              onChange={(chain) => {
-                setWalletTokens([]);
-                setWalletTransactions([]);
-                setActiveChain(chain)
-              }}
-              options={[
-                { value: 'ethereum', label: 'Ethereum' },
-                { value: 'arbitrum', label: 'Arbitrum' },
-                { value: 'base', label: 'Base' },
+              child={[
+                <Select
+                  key={'change-chain'}
+                  title="Change Chain"
+                  defaultValue={activeChain}
+                  style={{ width: 120 }}
+                  onChange={(chain) => {
+                    setWalletTokens([]);
+                    setWalletTransactions([]);
+                    setActiveChain(chain)
+                  }}
+                  options={[
+                    { value: 'ethereum', label: 'Ethereum' },
+                    { value: 'arbitrum', label: 'Arbitrum' },
+                    { value: 'base', label: 'Base' },
+                  ]}
+                />   
               ]}
-            />   
+            />
+                
             <WalletTokens
               style={{ marginTop: '1rem'}}
               chain={activeChain}
               wallet={wallet}
               walletTokens={walletTokens} 
             />
-            <WalletTransactions 
-              wallet={wallet}
-              walletTransactions={walletTransactions} 
-            />
-          </Col>
-          <Col span={8} className="slds-p-around_medium" >
-            
+            <h3 className="slds-m-around_medium">Transactions</h3>
             <Row style={{ margin: '1rem' }}>
               <Col span={6} style={{ padding: '5px'}}>
                 <Statistic title="Past 24 Hours" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(24, 'hours')).length} />
@@ -158,6 +155,13 @@ const Wallet = () => {
                 <Statistic title="Past 365 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(365, 'days')).length} />
               </Col>
             </Row>
+            <WalletTransactions 
+              wallet={wallet}
+              walletTransactions={walletTransactions} 
+            />
+          </Col>
+          <Col span={8} className="slds-p-around_medium" >
+            
             <h3>Other Wallets</h3>
             {wallets.length > 0 ? wallets.map((walletMetadata, i) => {
               return (

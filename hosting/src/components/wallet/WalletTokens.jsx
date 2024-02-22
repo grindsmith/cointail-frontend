@@ -9,41 +9,46 @@ const WalletTokens = (props) => {
 
     return (
         <>
-            <h3>Tokens ({walletTokens.length})</h3>
+            <h3 className="slds-m-around_medium">Tokens ({walletTokens.length})</h3>
             <Row>
             {walletTokens.length === 0 ? (
                 <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
             ): (
                 walletTokens.map((token) => {
                     return (
-                        <Card key={token.asset}>
-                            <Row>
-                                <Col span={3} align="left">
-                                    <img 
-                                        src={token.logo}
-                                        style={{
-                                            height: '25px',
-                                            width: '25px',
-                                            borderRadius: '50%'
-                                        }}
-                                    />
-                                </Col>
-                                <Col span={13}>
-                                    <div>{token.name} (${token.symbol})</div>
-                                </Col>
-                                <Col span={8} align="right">${token.holdings.toFixed(2)}</Col>
-                            </Row>
-                            <Row>
-                                <Col span={3} align="center">
-                                </Col>
-                                <Col span={13}>
-                                    <div style={{ fontSize: '10px'}}>
-                                        <a href={`https://dexscreener.com/${chain}/${token.contractAddress}`} target="_blank">Chart</a> - {token.pairs} Pairs
-                                    </div>
-                                </Col>
-                                <Col span={8} align="right" style={{ fontSize: '10px'}}>{parseFloat(token.walletBalance) > 1 ? parseFloat(token.walletBalance).toFixed(0) : parseFloat(token.walletBalance).toFixed(5)}</Col>
-                            </Row>
-                        </Card>
+                        <Col key={token.asset} span={8}>
+                            <Card  className="slds-m-around_small">
+                                <Row>
+                                    <Col span={3} align="left">
+                                        <img 
+                                            src={token.logo}
+                                            style={{
+                                                height: '25px',
+                                                width: '25px',
+                                                borderRadius: '50%'
+                                            }}
+                                        />
+                                    </Col>
+                                    <Col span={1} />
+                                    <Col span={12}>
+                                        <div>{token.name}</div>
+                                    </Col>
+                                    <Col span={8} align="right">${token.holdings.toFixed(2)}</Col>
+                                </Row>
+                                <Row className="slds-top_xx-small">
+                                    <Col span={6} align="left">
+                                        <div style={{ fontSize: '10px'}}>{token.symbol}</div>
+                                    </Col>
+                                    <Col span={18} align="right">
+                                        <div style={{ fontSize: '10px'}}>
+                                            <a href={`https://dexscreener.com/${chain}/${token.contractAddress}`} target="_blank">Chart</a> - {token.pairs} Pairs - 
+                                        
+                                        {parseFloat(token.walletBalance) > 1 ? parseFloat(token.walletBalance).toFixed(0) : parseFloat(token.walletBalance).toFixed(5)}
+                                        </div>
+                                    </Col>
+                               </Row>
+                            </Card>
+                        </Col>
                     )
                 })
             )}

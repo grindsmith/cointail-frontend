@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ReactDOM from 'react-dom/client'
 import './styles/index.css'
-import './styles/globals.css';
+import './styles/slds.css';
 import './styles/main.css';
 import './styles/responsive.css';
 import Wallet from './pages/wallet/Wallet.jsx';

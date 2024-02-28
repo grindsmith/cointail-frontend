@@ -28,7 +28,19 @@ const getWalletDocuments = async (table, field, value) => {
   });
 }
 
+const postDocument = async (table, document) => {
+  const newDoc = await firestore.collection(table).add({ ...document });
+
+  return newDoc.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data()
+    };
+  });
+}
+
 module.exports = {
   getAllDocuments,
-  getWalletDocuments
+  getWalletDocuments,
+  postDocument
 };

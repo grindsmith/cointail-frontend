@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Row, Col, Card, Select, Spin, Layout, Menu, Statistic } from 'antd';
+import { Row, Col, Card, Select, Spin, Layout, Menu, Statistic, Breadcrumb } from 'antd';
 const { Header, Content, Footer } = Layout;
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined, HomeFilled, WalletFilled } from '@ant-design/icons';
 import Moment from 'moment-timezone';
 import Axios from 'axios';
 
@@ -22,7 +22,7 @@ const Wallet = () => {
   const [walletTransactions, setWalletTransactions] = useState([]);
   const [activeChain, setActiveChain] = useState('arbitrum');
   const [wallets, setWallets] = useState([]);
-  const [items, setItems] = useState([{ key: 1, label: `Home`}, { key: 2, label: `Wallet`}])
+  const [items, setItems] = useState([{ key: 1, label: `Home`, icon: <HomeFilled />}, { key: 2, label: `Wallet`, icon: <WalletFilled /> }])
 
   useEffect(() => {
     getWallets();
@@ -85,33 +85,40 @@ const Wallet = () => {
     <Layout>
       <Header
         style={{ 
-          position: 'fixed', 
           zIndex: 1, 
           width: '100%', 
-          alignItems: 'center', 
-          display: 'flex' 
+          alignItems: 'left', 
+          display: 'flex',
+          backgroundColor: '#F0F2F5',
+          padding: '0'
         }}
       >
         <Menu
-          theme="dark"
+          theme="light"
           mode="horizontal"
           defaultSelectedKeys={['2']}
           items={items}
           onClick={(e) => handleHeaderClick(e.key)}
           style={{
             flex: 1,
-            minWidth: 0,
+            backgroundColor: '#F0F2F5',
+            border: 'none'
           }}
         />
       </Header>
-      <Content
-        style={{
-          padding: '0 15%',
-          marginTop: 64 
-        }}
-      >
+      <Content>
+        <Breadcrumb
+          style={{
+            margin: '16px',
+          }}
+        >
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>Wallet</Breadcrumb.Item>
+          <Breadcrumb.Item>{walletMetadata.name}</Breadcrumb.Item>
+        </Breadcrumb>
         <Row>
-          <Col span={16} className="slds-p-around_medium">
+          <Col sm={24} md={16} className="slds-p-around_medium">
+            <h3 className="slds-m-around_medium">Wallet</h3>
             <WalletHeader
               walletMetadata={walletMetadata}
               child={[
@@ -133,26 +140,26 @@ const Wallet = () => {
                 />   
               ]}
             />
-                
+            <h3 className="slds-m-around_medium">Current Holdings ({walletTokens.length})</h3>
             <WalletTokens
               style={{ marginTop: '1rem'}}
               chain={activeChain}
               wallet={wallet}
               walletTokens={walletTokens} 
             />
-            <h3 className="slds-m-around_medium">Transactions</h3>
+            <h3 className="slds-m-around_medium">Past Transactions</h3>
             <Row style={{ margin: '1rem' }}>
               <Col span={6} style={{ padding: '5px'}}>
-                <Statistic title="Past 24 Hours" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(24, 'hours')).length} />
+                <Statistic title="24 Hours" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(24, 'hours')).length} />
               </Col>
               <Col span={6} style={{ padding: '5px'}}>
-                <Statistic title="Past 7 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(7, 'days')).length} />
+                <Statistic title="7 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(7, 'days')).length} />
               </Col>
               <Col span={6} style={{ padding: '5px'}}>
-                <Statistic title="Past 30 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(30, 'days')).length} />
+                <Statistic title="30 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(30, 'days')).length} />
               </Col>
               <Col span={6} style={{ padding: '5px'}}>
-                <Statistic title="Past 365 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(365, 'days')).length} />
+                <Statistic title="365 Days" value={walletTransactions.filter((tx) => Moment(tx.blockTimestamp) > Moment().subtract(365, 'days')).length} />
               </Col>
             </Row>
             <WalletTransactions 
@@ -160,15 +167,16 @@ const Wallet = () => {
               walletTransactions={walletTransactions} 
             />
           </Col>
-          <Col span={8} className="slds-p-around_medium" >
-            
-            <h3>Other Wallets</h3>
+          <Col sm={24} md={8} className="slds-p-around_medium" >
+            <h3 className="slds-m-around_medium">Other Wallets</h3>
             {wallets.length > 0 ? wallets.map((walletMetadata, i) => {
-              return (
-                <div key={i} style={{ marginTop: '.5rem'}}>
-                  <WalletHeader walletMetadata={walletMetadata} />
-                </div>
-              )
+              if (walletMetadata.address !== wallet) {
+                return (
+                  <div key={i} style={{ marginTop: '.5rem'}}>
+                    <WalletHeader walletMetadata={walletMetadata} />
+                  </div>
+                )
+              }
             }) : (<Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />)}
           </Col>
         </Row>

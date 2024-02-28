@@ -3,7 +3,8 @@ require('dotenv').config();
 const Alchemy = require('../services/alchemy.services');
 const { 
     getWalletDocuments, 
-    getAllDocuments 
+    getAllDocuments,
+    postDocument
 } = require('../services/firestore.services');
 
 async function getWalletTokens(req, res) {
@@ -66,10 +67,20 @@ async function getWallet(req, res) {
     return res.json({ 'wallet': walletDoc});
 }
 
+async function postWallet(req, res) {
+    console.log('API Endpoint: postWallet');
+
+    const { name, chain, address } = req.body;
+
+    const walletDoc = await postDocument("wallet", { name, chain, address });
+
+    return res.json({ 'wallet': walletDoc});
+}
 
 module.exports = {
     getWalletTokens,
     getWalletTransactions,
     getWallets,
-    getWallet
+    getWallet,
+    postWallet
 };

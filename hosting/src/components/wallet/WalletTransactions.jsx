@@ -25,25 +25,25 @@ const WalletTransactions = (props) => {
 
     return (
         <>
-            <Card 
-                title="Transactions" 
-                type="inner"
-            >
-                {walletTransactions.length === 0 ? (
-                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-                ): (
-                    walletTransactions.map((tx) => {
-                        return (
-                            <Row key={tx.hash}>
+            {walletTransactions.length === 0 ? (
+                <Row>
+                    <Col span={24} align="center">
+                        <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                    </Col>
+                </Row>
+            ): (
+                walletTransactions.map((tx) => {
+                    return (
+                        <Card key={tx.hash}>
+                            <Row>
                                 <Col span={6} align="left">{tx.blockTimestamp}</Col>
                                 <Col span={16}>{formatSummary(tx)}</Col>
                                 <Col span={2} align="right">{tx.chain.slice(0,3).toUpperCase()}</Col>
-                                <Divider style={{ margin: 0 }} />
                             </Row>
-                        )
-                    })
-                )}
-            </Card>
+                        </Card>
+                    )
+                })
+            )}
         </>
     );
 };

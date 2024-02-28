@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import Axios from 'axios';
-import { Col, Input, Row, Button, Card, Modal, Spin } from 'antd';
+import { Col, Input, Row, Button, Card, Modal, Spin, Layout, Menu } from 'antd';
+const { Header, Content, Footer } = Layout;
+
 import { ReloadOutlined, LoadingOutlined } from '@ant-design/icons';
 
 // Styles
@@ -34,25 +36,56 @@ function App() {
   }
 
   const addWallet = async () => {
-    //const newDoc = await firestoreDB.collection('wallet').add({ name, address, chain });
+    Axios.post(`${import.meta.env.VITE_API_URL}/api/wallet`, {
+      name,
+      address,
+      chain
+    })
+    .then((res) => {
+      console.log(res);
+
+      setName('');
+      setAddress('');
+    })
+    .catch((err) => console.log(err));
   }
 
   return (
-    <div className="root">
-      <h1 style={{ textAlign: 'left', color: '#fff', paddingTop: '3rem'}}>Cointail</h1>
-      <h2 style={{ textAlign: 'left', color: '#f37925' }}>Select A Wallet</h2>
+    <Layout>
+      <Content
+        style={{
+          marginTop: 64,
+          backgroundColor: '#F0F2F5'
+        }}
+      >
+      <h1 style={{ 
+        color: '#000', 
+        paddingBottom: '1.5rem', 
+        fontSize: '45px', 
+        fontWeight: '600', 
+        textAlign: 'center'
+      }}>Cointail</h1>
+      <h2 style={{ 
+        color: '#f37925', 
+        paddingBottom: '1.5rem', 
+        fontSize: '24px', 
+        fontWeight: '600', 
+        textAlign: 'center' 
+      }}>Select A Wallet</h2>
       <Row>
         <Col span={24}>
           <Card 
-            title="WAGMI Wallets"
-            type="inner"
+            title="Wallets"
             style={{ minWidth: '50vw'}}
             extra={
               <>
                 <Button 
                   icon={<ReloadOutlined />}
-                  onClick={() => getAllWallets().then((result) => setWallets(result))}
-                />        
+                  onClick={() => {
+                    setWallets([]);
+                    getAllWallets().then((result) => setWallets(result))
+                  }}
+                />
                 <Button 
                   type="primary"
                   style={{ marginLeft: '5px'}}
@@ -67,7 +100,7 @@ function App() {
               ): (
                 wallets.map((walletMetadata) => {
                   return (
-                    <Col key={walletMetadata.address} span={12} style={{ padding: '.75rem'}}>
+                    <Col key={walletMetadata.address} xs={24} sm={24} md={12} style={{ padding: '.75rem'}}>
                       <WalletHeader walletMetadata={walletMetadata} />
                     </Col>
                   )
@@ -79,16 +112,22 @@ function App() {
         <Modal 
           title="Add New Wallet" 
           open={isOpen} 
-          onOk={() => setIsOpen(false)} 
+          onOk={async () => {
+            await addWallet();
+            await setIsOpen(false);
+          }} 
           onCancel={() => setIsOpen(false)}
         >
+          <h6 style={{ marginTop: '1rem' }}>Name</h6>
           <Input value={name} onChange={(e) => setName(e.target.value)} />
-          <Input value={chain} onChange={(e) => setChain(e.target.value)} />
+          <h6 style={{ marginTop: '1rem' }}>Blockchain <small>(Currently Only Supporting Ethereum)</small></h6>
+          <Input value={chain} />
+          <h6 style={{ marginTop: '1rem' }}>Address</h6>
           <Input value={address} onChange={(e) => setAddress(e.target.value)} />
-          <Button onClick={addWallet}>Add Wallet</Button>
         </Modal>
       </Row>
-    </div>
+      </Content>
+    </Layout>
   )
 }
 

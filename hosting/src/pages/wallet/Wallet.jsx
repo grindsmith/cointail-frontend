@@ -6,6 +6,8 @@ import { LoadingOutlined, HomeFilled, WalletFilled } from '@ant-design/icons';
 import Moment from 'moment-timezone';
 import Axios from 'axios';
 
+import './Wallet.css';
+
 // Components
 import WalletTransactions from "../../components/wallet/WalletTransactions";
 import WalletHeader from "../../components/wallet/WalletHeader";
@@ -117,7 +119,7 @@ const Wallet = () => {
           <Breadcrumb.Item>{walletMetadata.name}</Breadcrumb.Item>
         </Breadcrumb>
         <Row>
-          <Col sm={24} md={16} className="slds-p-around_medium">
+          <Col xs={24} sm={24} md={16} className="slds-p-around_medium">
             <h3 className="slds-m-around_medium">Wallet</h3>
             <WalletHeader
               walletMetadata={walletMetadata}
@@ -140,9 +142,8 @@ const Wallet = () => {
                 />   
               ]}
             />
-            <h3 className="slds-m-around_medium">Current Holdings ({walletTokens.length})</h3>
+            <h3 className="slds-m-around_medium">Current Holdings</h3>
             <WalletTokens
-              style={{ marginTop: '1rem'}}
               chain={activeChain}
               wallet={wallet}
               walletTokens={walletTokens} 

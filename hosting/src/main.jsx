@@ -13,12 +13,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={
-          <div className="root">
+          <div className="app-root">
             <App />
           </div>
         } />
         <Route path="/wallet/:wallet" element={
-          <div className="root">
+          <div className="wallet-root">
             <Wallet />
           </div>
         } />

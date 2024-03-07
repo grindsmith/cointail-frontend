@@ -54,60 +54,82 @@ function App() {
     <Layout>
       <Content
         style={{
-          marginTop: 64,
           backgroundColor: '#F0F2F5'
         }}
       >
-      <h1 style={{ 
-        color: '#000', 
-        paddingBottom: '1.5rem', 
-        fontSize: '45px', 
-        fontWeight: '600', 
-        textAlign: 'center'
-      }}>Cointail</h1>
-      <h2 style={{ 
-        color: '#f37925', 
-        paddingBottom: '1.5rem', 
-        fontSize: '24px', 
-        fontWeight: '600', 
-        textAlign: 'center' 
-      }}>Select A Wallet</h2>
       <Row>
-        <Col span={24}>
-          <Card 
-            title="Wallets"
-            style={{ minWidth: '50vw'}}
-            extra={
-              <>
-                <Button 
-                  icon={<ReloadOutlined />}
-                  onClick={() => {
-                    setWallets([]);
-                    getAllWallets().then((result) => setWallets(result))
-                  }}
-                />
-                <Button 
-                  type="primary"
-                  style={{ marginLeft: '5px'}}
-                  onClick={() => setIsOpen(true)}
-                >Add Wallet</Button>
-              </>
-            }
-          >
-            <Row>
-              {wallets.length === 0 ? (
-                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-              ): (
-                wallets.map((walletMetadata) => {
-                  return (
-                    <Col key={walletMetadata.address} xs={24} sm={24} md={12} style={{ padding: '.75rem'}}>
-                      <WalletHeader walletMetadata={walletMetadata} />
-                    </Col>
-                  )
-                }
-              ))}
+        
+        <Col xs={24} sm={24} md={24} lg={15}>
+          <div className="slds-p-top_xx-large app-wallets">
+            <h1 style={{ 
+              color: '#000', 
+              paddingBottom: '.75rem', 
+              fontSize: '45px', 
+              fontWeight: '600', 
+              textAlign: 'center'
+            }}>Cointail</h1>
+            <h2 style={{ 
+              color: '#1677ff', 
+              paddingBottom: '3rem', 
+              fontSize: '16px', 
+              fontWeight: '600', 
+              textAlign: 'center' 
+            }}>Select An Existing Wallet</h2>
+            <Card 
+              title="Wallets"
+              extra={
+                <>
+                  <Button 
+                    icon={<ReloadOutlined />}
+                    onClick={() => {
+                      setWallets([]);
+                      getAllWallets().then((result) => setWallets(result))
+                    }}
+                  />
+                  <Button 
+                    type="primary"
+                    style={{ marginLeft: '5px'}}
+                    onClick={() => setIsOpen(true)}
+                  >Add Wallet</Button>
+                </>
+              }
+            >
+              <Row>
+                {wallets.length === 0 ? (
+                  <Col span={24} align="center">
+                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+                  </Col>
+                ): (
+                  wallets.map((walletMetadata) => {
+                    return (
+                      <Col key={walletMetadata.address} xs={24} sm={24} md={12} style={{ padding: '.75rem'}}>
+                        <WalletHeader walletMetadata={walletMetadata} />
+                      </Col>
+                    )
+                  }
+                ))}
+              </Row>
+            </Card>
+          </div>
+        </Col>
+        <Col xs={0} sm={0} md={0} lg={9}>
+          <div 
+            style={{ 
+              minHeight: '100vh', 
+              minWidth: '100%',
+              backgroundColor: "#000",
+              position: "absolute",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: '100% 100%',
+              backgroundImage:"url('../../../public/images/cointail_home_background_2.webp')"
+            }} 
+            className="slds-p-around_xx-large"
+          > 
+            <Row className="slds-p-top_xx-large">
+              <Col span={24}></Col>
             </Row>
-          </Card>
+          </div>
         </Col>
         <Modal 
           title="Add New Wallet" 

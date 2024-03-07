@@ -3,6 +3,16 @@ body {
   background: #F0F2F5;
 }
 
+.app-root {
+  margin-left: 0%;
+  margin-right: 0%;
+}
+
+.app-wallets {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -52,8 +62,12 @@ body {
 }
 
 @media (max-width: 767px) {
-  .root {
+  .app-root {
     padding-left: 2%;
     padding-right: 2%;
+  }
+  .app-wallets {
+    margin-left: 0%;
+    margin-right: 0%;
   }
 }

@@ -16,7 +16,7 @@ const WalletTokens = (props) => {
                 <Row>
                 {walletTokens.map((token) => {
                     return (
-                        <Col key={token.asset} sm={8} md={8}>
+                        <Col key={token.asset} xs={24} sm={12} md={8} className="slds-p-vertical_xx-small">
                             <Card type="inner">
                                 <Row>
                                     <Col sm={5} md={3} align="left">

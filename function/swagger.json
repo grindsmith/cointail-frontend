@@ -1,0 +1,139 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.1", 
+      "title": "CoinTail API",
+      "description": "Track other wallets transactions.",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/api/wallet/{wallet}/tokens": {
+            "get": {
+                "summary": "Get Wallet Tokens on specified chain.",
+                "description": "Returns the wallet's token balance.",
+                "tags": ["Wallet"],
+                "parameters": [
+                    {
+                        "name": "chain",
+                        "in": "query",
+                        "description": "The chain that the wallet is on.",
+                        "required": true,
+                        "type": "string",
+                        "example": "ethereum"
+                    },
+                    {
+                        "name": "network",
+                        "in": "query",
+                        "description": "The network on the chain the wallet is on.",
+                        "required": true,
+                        "type": "string",
+                        "example": "mainnet"
+                    },
+                    {
+                        "name": "wallet",
+                        "in": "path",
+                        "description": "The wallet address.",
+                        "required": true,
+                        "type": "string",
+                        "example": "0xEBe035dA5DF98E8297D31cFD1c249732a6d6d3bA"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "balance": {
+                                    "type": "number",
+                                    "description": "The user's wallet balance"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wallet/{wallet}/transactions": {
+            "get": {
+                "summary": "Get transactions by user wallet (utilizing the Alchemy SDK)",
+                "description": "Returns the user's wallet transactions.",
+                "tags": ["Wallet"],
+                "parameters": [
+                    {
+                        "name": "chain",
+                        "in": "query",
+                        "description": "The chain that the wallet is on.",
+                        "required": true,
+                        "type": "string",
+                        "example": "ethereum"
+                    },
+                    {
+                        "name": "network",
+                        "in": "query",
+                        "description": "The network on the chain the wallet is on.",
+                        "required": true,
+                        "type": "string",
+                        "example": "mainnet"
+                    },
+                    {
+                        "name": "wallet",
+                        "in": "path",
+                        "description": "The wallet address.",
+                        "required": true,
+                        "type": "string",
+                        "example": "0xEBe035dA5DF98E8297D31cFD1c249732a6d6d3bA"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "balance": {
+                                    "type": "number",
+                                    "description": "The user's wallet balance"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/wallet": {
+            "get": {
+                "summary": "Return All Wallets",
+                "description": "Returns the wallets.",
+                "tags": ["Wallet"],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "wallets": {
+                                    "type": "array",
+                                    "description": "The user's wallet balance"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Wallet"
+        }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"]
+}

@@ -1,0 +1,11 @@
+.wallet-root {
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+@media (max-width: 767px) {
+    .wallet-root {
+      padding-left: 2%;
+      padding-right: 2%;
+    }
+}

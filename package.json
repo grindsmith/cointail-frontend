@@ -8,12 +8,13 @@
     "firebase-tools": "^13.3.0"
   },
   "scripts": {
-    "start": "concurrently \"npm run function:start\" \"npm run hosting:start\"",
-    "deploy": "concurrently \"npm run function:deploy\" \"npm run hosting:deploy\"",
-    "function:start": "cd function && npm start",
-    "function:deploy": "cd function && node_modules/.bin/firebase deploy --only functions",
-    "hosting:start": "cd hosting && npm run dev",
-    "hosting:deploy": "cd hosting && node_modules/.bin/firebase deploy --only hosting"
+    "start": "concurrently \"npm run start:function\" \"npm run start:react\"",
+    "deploy": "concurrently \"npm run deploy:function\" \"npm run deploy:react\"",
+    "start:react": "cd react && npm run dev",
+    "start:function": "cd function && npm start",
+    "deploy:react": "cd react && node_modules/.bin/firebase deploy --only hosting:react",
+    "deploy:nextjs": "cd nextjs && node_modules/.bin/firebase deploy --only hosting:nextjs",
+    "deploy:function": "cd function && node_modules/.bin/firebase deploy --only functions"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

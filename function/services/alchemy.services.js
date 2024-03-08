@@ -145,16 +145,28 @@ async function formatWalletTransactions(networkSettings, accountAddress, transac
       tmp[txHash].action = "Swap";
       
       tmp[txHash].assetTwo = transactions[i].asset;
-      
-      tmp[txHash].summary = tmp[txHash].summary + " for " + (transactions[i].value?.toFixed(5) || 0.00) + " " + transactions[i].asset;
+
+      if (transactions[i].value) {
+        if (transactions[i].value > 10) {
+          tmp[txHash].summary = tmp[txHash].summary + " for " + transactions[i].value?.toFixed(0) + " " + transactions[i].asset;      
+        } else {
+          tmp[txHash].summary = tmp[txHash].summary + " for " + transactions[i].value?.toFixed(4) + " " + transactions[i].asset;      
+        }
+      } else {
+        tmp[txHash].summary = tmp[txHash].summary + " for " + 0.00 + " " + transactions[i].asset;
+      }
       
       tmp[txHash].contractAddressTwo = transactions[i].rawContract.address;
     } else {
       tmp[txHash] = transactions[i]
       
       tmp[txHash].chain = chain;
-      
-      tmp[txHash].value = transactions[i].value?.toFixed(5) || 0.00;
+
+      if (transactions[i].value) {
+        tmp[txHash].value = transactions[i].value > 10 ? transactions[i].value?.toFixed(0) : transactions[i].value?.toFixed(4);
+      } else {
+        tmp[txHash].value = 0.00;
+      }
       
       tmp[txHash].summary = transactions[i].value + " " + transactions[i].asset;
       

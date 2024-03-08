@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "cointail-7b094"
-  }
+  },
+  "targets": {
+    "cointail-7b094": {
+      "hosting": {
+        "react": [
+          "cointail-7b094"
+        ],
+        "nextjs": [
+          "cointailapp"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

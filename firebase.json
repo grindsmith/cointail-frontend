@@ -12,20 +12,39 @@
         ".git",
         "firebase-debug.log",
         "firebase-debug.*.log"
-      ]
+      ],
+      "env": {
+        "NODE_ENV": "production",
+        "ALCHEMY_API_KEY": "4zCwn0JqW90GVky38PkaIaKYK-zQF1vu"
+      }
     }
   ],
-  "hosting": {
-    "source": "hosting",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "frameworksBackend": {
-      "region": "us-central1"
+  "hosting": [
+    {
+      "target": "react",
+      "source": "react",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "frameworksBackend": {
+        "region": "us-central1"
+      }
+    },
+    {
+      "target": "nextjs",
+      "source": "nextjs",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "frameworksBackend": {
+        "region": "us-central1"
+      }
     }
-  },
+  ],
   "emulators": {
     "firestore": {
       "port": 8080
@@ -38,5 +57,8 @@
       "port": 5003
     },
     "singleProjectMode": true
+  },
+  "extensions": {
+    "moralis-streams": "moralis/moralis-streams@0.1.16"
   }
 }

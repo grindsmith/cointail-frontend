@@ -3,6 +3,7 @@ import { Card, Row, Col, Typography } from 'antd';
 const { Title } = Typography;
 
 const WalletMetricCard = (props) => {
+  console.log(`https://dexscreener.com/${props.chain}/${props.contractAddress}`);
   return (
     <Card bordered={true} className="slds-m-around_xx-small">
       <div className="number">
@@ -11,7 +12,7 @@ const WalletMetricCard = (props) => {
             <span>{props.title}</span>
             <Title level={3} style={{ margin: '0'}}>{props.metric}</Title>
             <Title level={5} style={{ marginTop: '0'}}>
-              {props.metricType}
+              {props.walletBalance} <a href={`https://dexscreener.com/${props.chain}/${props.contractAddress}`} target="_blank">{props.symbol}</a>
             </Title>
           </Col>
         </Row>

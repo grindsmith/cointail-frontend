@@ -195,22 +195,19 @@ const Wallet = () => {
                   children:
                   <div>
                     <WalletTokens
-                      title={'Arbitrum'}
-                      chain={activeChain}
+                      chain={'Arbitrum'}
                       wallet={wallet}
                       walletTokens={arbWalletTokens} 
                       isLoading={arbTokensLoading}
                     />
                     <WalletTokens
-                      title={'Base'}
-                      chain={activeChain}
+                      chain={'Base'}
                       wallet={wallet}
                       walletTokens={baseWalletTokens} 
                       isLoading={baseTokensLoading}
                     />
                     <WalletTokens
-                      title={'Ethereum'}
-                      chain={activeChain}
+                      chain={'Ethereum'}
                       wallet={wallet}
                       walletTokens={ethWalletTokens} 
                       isLoading={ethTokensLoading}

@@ -7,24 +7,20 @@ import { LoadingOutlined } from '@ant-design/icons';
 import WalletMetricCard from "./WalletMetricCard";
 
 const WalletTokens = (props) => {
-    const { title, chain, wallet, isLoading, walletTokens } = props;
-
-
-    console.log(walletTokens);
+    const { chain, wallet, isLoading, walletTokens } = props;
 
     return (
         <>
-            {isLoading || walletTokens.length > 0 ? (<Title level={4} className="slds-m-top_medium">{title}</Title>) : (<></>)}
+            {isLoading || walletTokens.length > 0 ? (<Title level={4} className="slds-m-top_medium">{chain}</Title>) : (<></>)}
             {isLoading ? (
                 <Col span={24} align="center">
                     <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                 </Col>
             ): (
                 <Row>
-                {walletTokens.map((token) => {
-                    console.log(token)
+                {walletTokens.map((token, i) => {
                     return (
-                        <Col xs={12} sm={12} md={8}>
+                        <Col key={i} xs={24} sm={12} md={8}>
                             <WalletMetricCard
                                 title={
                                     <div className="slds-truncate">
@@ -40,7 +36,10 @@ const WalletTokens = (props) => {
                                     </div>
                                 }
                                 metric={`$${token.holdings.toFixed(0)}`}
-                                metricType={`${token.walletBalance.toFixed(2)} ${token.symbol}`}
+                                walletBalance={token.walletBalance.toFixed(2)}
+                                symbol={token.symbol}
+                                chain={chain.toLowerCase()}
+                                contractAddress={token.contractAddress}
                             />
                         </Col>
                     )

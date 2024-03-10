@@ -54,6 +54,13 @@ async function getWallets(req, res) {
 
     const walletDocuments = await getAllDocuments("wallet");
 
+    const wallets = walletDocuments.map((wallet) => {
+        return ({
+            address: wallet.address.toLowerCase(),
+            ...wallet
+        })
+    })
+
     return res.json({ 'wallets': walletDocuments});
 }
 
@@ -63,6 +70,14 @@ async function getWallet(req, res) {
     const { wallet } = req.params;
 
     const walletDoc = await getWalletDocuments("wallet", "address", wallet);
+
+    if (walletDoc.length === 0) {
+        walletDoc.push({
+            'name': 'Unknown Wallet',
+            'address': wallet,
+            'chain': 'ethereum'
+        });
+    }
 
     return res.json({ 'wallet': walletDoc});
 }

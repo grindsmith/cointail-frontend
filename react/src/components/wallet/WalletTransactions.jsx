@@ -17,14 +17,31 @@ const WalletTransactions = (props) => {
         }
     }
 
-    const formatSummary = (tx) => {        
+    const formatSummary = (tx) => {       
+        const actionName = tx.action === "Received" ? "from" : "to";
+        
+        return (
+            <div>
+                {tx.action} {tx.summary} {tx.action === "Received" ? "from" : "to" }
+                {!tx.toIsContract ? (
+                    <a target="_self" href={`/wallet/${tx[actionName]}`} className="slds-m-left_xx-small">
+                        {wallets[tx[actionName]] !== undefined ? wallets[tx[actionName]].name : `0x${tx[actionName].slice(-7)}`} [Wallet]
+                    </a>
+                ) : <span className="slds-m-left_xx-small">0x{tx[actionName].slice(-7)} [Contract]</span> }
+            </div>
+        );
+    }
+
+    const getCounterPartyWallet = (tx) => {        
         if (tx.action === "Sent") {
-            return (<div>{tx.action} {tx.summary} to <a target="_blank" href={`https://${getSite(tx)}.io/address/${tx.to}`} >{wallets[tx.to] !== undefined ? wallets[tx.to].name : `0x${tx.to.slice(-7)}`}</a></div>);
+            return tx.to;
         } else if (tx.action === "Received") {
-            return (<div>{tx.action} {tx.summary} from <a target="_blank" href={`https://${getSite(tx)}.io/address/${tx.from}`}>{wallets[tx.from] !== undefined ? wallets[tx.from].name : `0x${tx.from.slice(-7)}`}</a></div>);
+            return tx.from;
         } else if (tx.action === "Swap") {
-            return (<div>Swapped {tx.summary} with <a target="_blank" href={`https://${getSite(tx)}.io/address/${tx.to}`}>0x{tx.to.slice(-7)}</a></div>);
-        } 
+            return tx.to;
+        } else {
+            return null;
+        }
     }
 
     return (
@@ -38,20 +55,32 @@ const WalletTransactions = (props) => {
             ): (
                 walletTransactions.map((tx) => {
                     return (
-                        <Card key={tx.hash}>
+                        <Card key={tx.hash} type="inner" className="slds-m-bottom_xx-small">
                             <Row>
                                 <Col span={20} align="left">
+                                    <div><small>{tx.blockTimestamp}</small></div>
                                     <h3 className="slds-truncate">{formatSummary(tx)}</h3>
-                                    <div>{tx.blockTimestamp} - {tx.chain}</div>
+                                    <div>{tx.category.toUpperCase()}</div>
                                 </Col>
-                                <Col span={4} align="right">
-                                    <Button 
-                                        title={`View Contract On ${getSite(tx)}`}
-                                        type="primary" 
-                                        icon={<CodeOutlined />} 
-                                        size={'large'} 
-                                        onClick={() => { window.open(`https://${getSite(tx)}.io/address/${tx.contractAddress}`, '_blank').focus()}}
-                                    />
+                                <Col span={4} align="right" className="slds-m-top_small">
+                                    {/*getCounterPartyWallet(tx) !== null ? (
+                                        <Button 
+                                            title={`View Other Wallet`}
+                                            type="primary" 
+                                            icon={<CodeOutlined />} 
+                                            size={'large'} 
+                                            onClick={() => { window.open(`/wallet/${getCounterPartyWallet(tx)}`, '_self').focus()}}
+                                        />
+                                    ) : <></> */}
+                                    {tx.contractAddress !== null ? (
+                                        <Button 
+                                            title={`View Contract On ${getSite(tx)}`}
+                                            type="primary" 
+                                            icon={<CodeOutlined />} 
+                                            size={'large'} 
+                                            onClick={() => { window.open(`https://${getSite(tx)}.io/address/${tx.contractAddress}`, '_blank').focus()}}
+                                        />
+                                    ) : <></>}
                                 </Col>
                             </Row>
                         </Card>

@@ -106,14 +106,24 @@ async function filterWalletTokens(accountTokens) {
   const filteredTokens = [];
   for (let i = 0; i < accountTokens.length; i++) {
     if (accountTokens[i].walletBalance > 0) {
-      const dexData = await Axios.get(`https://api.dexscreener.com/latest/dex/tokens/${accountTokens[i].contractAddress}`);
+      if (accountTokens[i].label === "ETH") {
+        const dexData = await Axios.get(`https://api.dexscreener.com/latest/dex/pairs/scroll/0x814a23b053fd0f102aeeda0459215c2444799c70`);
 
-      if (dexData.data.pairs?.length > 0) {
         accountTokens[i].pairs = dexData.data.pairs?.length;
         accountTokens[i].priceUsd = dexData.data.pairs[0].priceUsd;
         accountTokens[i].holdings = accountTokens[i].walletBalance * dexData.data.pairs[0].priceUsd;
 
         filteredTokens.push(accountTokens[i]);
+      } else {
+        const dexData = await Axios.get(`https://api.dexscreener.com/latest/dex/tokens/${accountTokens[i].contractAddress}`);
+
+        if (dexData.data.pairs?.length > 0) {
+          accountTokens[i].pairs = dexData.data.pairs?.length;
+          accountTokens[i].priceUsd = dexData.data.pairs[0].priceUsd;
+          accountTokens[i].holdings = accountTokens[i].walletBalance * dexData.data.pairs[0].priceUsd;
+  
+          filteredTokens.push(accountTokens[i]);
+        }
       }
     }
   }
@@ -159,6 +169,9 @@ async function formatWalletTransactions(networkSettings, accountAddress, transac
       tmp[txHash].contractAddressTwo = transactions[i].rawContract.address;
     } else {
       tmp[txHash] = transactions[i]
+
+      tmp[txHash].toIsContract = await alchemy.core.isContractAddress(transactions[i].to);
+      tmp[txHash].fromIsContract = await alchemy.core.isContractAddress(transactions[i].from);
       
       tmp[txHash].chain = chain;
 

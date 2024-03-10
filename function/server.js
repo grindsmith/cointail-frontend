@@ -25,7 +25,7 @@ app.use(express.json());
 app.set("json spaces", 2);
 app.use(cors());
 
-// Controllers
+// WALLET API ROUTES
 const { 
   getWallets, 
   getWallet,
@@ -34,12 +34,20 @@ const {
   getWalletTransactions, 
 } = require('./api/wallet.controller');
 
-// API ROUTES
+app.post('/api/wallet', postWallet);
 app.get('/api/wallets', getWallets);
 app.get('/api/wallet/:wallet', getWallet);
-app.post('/api/wallet', postWallet);
 app.get('/api/wallet/:wallet/tokens', getWalletTokens);
 app.get('/api/wallet/:wallet/transactions', getWalletTransactions);
+
+// USER API ROUTES
+const {
+  getNotificationsForUser
+} = require('./api/notification.controller');
+
+app.get('/api/user/:userId/notifications', getNotificationsForUser);
+
+// REACT ROUTES
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(errorHandler);

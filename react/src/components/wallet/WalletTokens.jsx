@@ -9,6 +9,8 @@ import WalletMetricCard from "./WalletMetricCard";
 const WalletTokens = (props) => {
     const { chain, wallet, isLoading, walletTokens } = props;
 
+    console.log(walletTokens)
+
     return (
         <>
             {isLoading || walletTokens.length > 0 ? (<Title level={4} className="slds-m-top_medium">{chain}</Title>) : (<></>)}
@@ -36,7 +38,7 @@ const WalletTokens = (props) => {
                                     </div>
                                 }
                                 metric={`$${token.holdings.toFixed(0)}`}
-                                walletBalance={token.walletBalance.toFixed(2)}
+                                walletBalance={token.walletBalance > 1 ? token.walletBalance.toFixed(2) : token.walletBalance.toFixed(5)}
                                 symbol={token.symbol}
                                 chain={chain.toLowerCase()}
                                 contractAddress={token.contractAddress}

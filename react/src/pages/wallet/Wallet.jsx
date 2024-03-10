@@ -22,7 +22,7 @@ const Wallet = () => {
   const [items, setItems] = useState([{ key: 1, label: `Home`, icon: <HomeFilled />}, { key: 2, label: `Wallet`, icon: <WalletFilled /> }])
   const [wallets, setWallets] = useState({});
   const [walletMetadata, setWalletMetadata] = useState({});
-  const [activeChain, setActiveChain] = useState('arbitrum');
+  const [activeChain, setActiveChain] = useState('ethereum');
 
   // Arbitrum
   const [arbTokensLoading, setArbTokensLoading] = useState(false);
@@ -50,7 +50,7 @@ const Wallet = () => {
       if (res.data.wallets) {
         let tmp = {};
         for (let i = 0; i < res.data.wallets.length; i++) {
-          tmp[res.data.wallets[i].address] = res.data.wallets[i];
+          tmp[res.data.wallets[i].address.toLowerCase()] = res.data.wallets[i];
         }
 
         setWallets(tmp)
@@ -116,7 +116,8 @@ const Wallet = () => {
     Axios.get(`${import.meta.env.VITE_API_URL}/api/wallet/${wallet}/transactions?chain=${chain}&network=mainnet`)
       .then((res) => {
         if (res.data?.transactions) {
-          setWalletTransactions(res.data.transactions)
+          setWalletTransactions(res.data.transactions);
+          console.log(res.data.transactions)
         } else {
           console.log(res);
         }

@@ -10,11 +10,13 @@ const WalletHeader = ({ walletMetadata, child }) => {
 
   const navigate = useNavigate();
 
+  console.log()
+
   return (
     <Card>
       <Row>
         <Col xs={20}>
-          <h3>{walletMetadata.name}</h3>
+          <h3>{walletMetadata.name || 'Unknown Wallet'}</h3>
           <small className="slds-truncate">{walletMetadata.chain === 'ethereum' ? `0x${walletMetadata.address?.slice(5)}` : walletMetadata.address?.slice(5)}</small>
         </Col>
         <Col span={4} align="right">
